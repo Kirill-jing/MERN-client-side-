@@ -7,16 +7,29 @@ import {
   Switch
 } from 'react-router-dom';
 
-import BurgerBuilder from './containers/BurgerBuilder';
+import NavLinks from './shared/Navigation/NavLinks'
+import AllProducts from './containers/AllProducts'
+
+import AddProduct from './containers/AddProduct';
 
 class App extends Component {
   render () {
     return (
-      <div>
+      <Router>
+         <NavLinks/>
+         
+         <main>
+         <Switch>
+         <Route path='/' exact>
+          <AllProducts />
+          </Route>
+          <Route path='/add-product' exact>
+          <AddProduct />
+          </Route>
         
-          <BurgerBuilder />
-     
-      </div>
+          </Switch>
+          </main>
+      </Router>
     );
   }
 }

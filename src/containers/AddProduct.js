@@ -3,7 +3,7 @@ import React , {Component} from 'react'
 import axios from 'axios';
 import './birger.css'
 
-class BurgerBuilder extends Component {
+class AddProduct extends Component {
     state = {
         name:' ',
         price:' ',
@@ -65,4 +65,4 @@ class BurgerBuilder extends Component {
     }
   }
   
-  export default BurgerBuilder;
+  export default AddProduct;
