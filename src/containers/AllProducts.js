@@ -17,12 +17,16 @@ class Allproducts extends Component{
                 console.log(result)
          })     
     }
-s
+
+ 
 
 
    render(){
 
+
+  
       let products = this.state.products.map((product) =>{
+ 
         return   <Product
           key={product._id}
           id={product._id}
@@ -30,7 +34,7 @@ s
           description={product.description}
           price={product.price}
           image={product.image}
-         substract= {this.substract}
+      
           />
       })
   
