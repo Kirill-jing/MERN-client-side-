@@ -1,35 +1,31 @@
 
 import React, { Component } from 'react';
 import {
-  BrowserRouter as Router,
+  BrowserRouter ,
   Route,
-  Redirect,
   Switch
 } from 'react-router-dom';
 
 import NavLinks from './shared/Navigation/NavLinks'
 import AllProducts from './containers/AllProducts'
 
+
 import AddProduct from './containers/AddProduct';
 
-class App extends Component {
+class App extends Component { 
+
   render () {
     return (
-      <Router>
+      < BrowserRouter>
          <NavLinks/>
-         
          <main>
          <Switch>
-         <Route path='/' exact>
-          <AllProducts />
-          </Route>
-          <Route path='/add-product' exact>
-          <AddProduct />
-          </Route>
-        
+         <Route path='/products'   component={AllProducts }  >
+         </Route>
+          <Route component={AddProduct }  path='/add-product' />
           </Switch>
           </main>
-      </Router>
+      </ BrowserRouter>
     );
   }
 }
