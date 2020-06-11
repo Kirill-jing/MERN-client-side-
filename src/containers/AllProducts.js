@@ -2,6 +2,7 @@ import React , {Component} from 'react'
 import axios from 'axios'
 import Product from '../components/Product/Product'
 import ProductDetails from '../components/Product/Product-detail'
+
 import {
   BrowserRouter ,
   Route,
@@ -25,7 +26,9 @@ class Allproducts extends Component{
          axios.get('http://localhost:5003/user/products')
          .then(result=>{
                this.setState({products:result.data.product}
+               
                )     
+               console.log(result)
          })  
     }
        componentDidUpdate(){
@@ -36,12 +39,12 @@ class Allproducts extends Component{
         
         this.setState({product:result.data.prod})
 
-  console.log(result)
-  console.log(this.props)
+
       })}
     
     }}
    render(){
+     console.log(this.state.products)
      let post
      if(this.state.products!=null){
      post=<p>loading</p>
@@ -62,7 +65,7 @@ if(this.state.product){
           name={product.name}
           description={product.description}
           price={product.price}
-          image={product.image}
+          image={'http://localhost:5003/'+ product.image}
           detailsHandler={()=>this.detailsHandler(product._id)
           }
           />
