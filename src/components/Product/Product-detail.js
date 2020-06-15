@@ -3,6 +3,7 @@ import React from 'react'
 
 
 const productDetails =(props)=>{
+
     return(
         <div>
           <div >{props.description}</div>

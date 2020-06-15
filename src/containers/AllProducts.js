@@ -3,48 +3,42 @@ import axios from 'axios'
 import Product from '../components/Product/Product'
 import ProductDetails from '../components/Product/Product-detail'
 
-import {
-  BrowserRouter ,
-  Route,
-  Redirect,
-  Switch
-} from 'react-router-dom';
+import {Route} from 'react-router-dom';
 
 class Allproducts extends Component{
-
     state = {
     products:[],
     product:null
-
-    }
-
-
-  
+}
 
     componentDidMount(){
-
          axios.get('http://localhost:5003/user/products')
          .then(result=>{
-               this.setState({products:result.data.product}
-               
-               )     
-               console.log(result)
+               this.setState({products:result.data.product})       
          })  
     }
        componentDidUpdate(){
-
           this.detailsHandler=(id)=>{
             if(id){
       axios.get(`http://localhost:5003/user/products/${id}`).then(result=>{
-        
         this.setState({product:result.data.prod})
-
-
+      
       })}
-    
     }}
+
+   delete=(id)=>{
+  axios.delete('http://localhost:5003/user/delete-product/'+ id)
+let newProds={
+  ...this.state.products
+}
+let update = Object.values(newProds).filter(prod=>
+prod._id!==id
+)
+this.setState({products:update})
+   }
+
    render(){
-     console.log(this.state.products)
+
      let post
      if(this.state.products!=null){
      post=<p>loading</p>
@@ -56,7 +50,6 @@ if(this.state.product){
         price={this.state.product.price}
         />
 }
-   
       let products = this.state.products.map((product) =>{
         return ( 
               <Product
@@ -66,11 +59,10 @@ if(this.state.product){
           description={product.description}
           price={product.price}
           image={'http://localhost:5003/'+ product.image}
-          detailsHandler={()=>this.detailsHandler(product._id)
-          }
+          detailsHandler={()=>this.detailsHandler(product._id)}
+          delete={()=>this.delete(product._id)}
           />
-        )
-      })
+        )})
        return(
         <div>
        {products}
@@ -78,9 +70,6 @@ if(this.state.product){
     <Route component={ProductDetails }  path='/products/:prodId' />
        </div>
        )
-   }
-
-
-}
+   }}
 
 export default Allproducts

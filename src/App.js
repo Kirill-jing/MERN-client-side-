@@ -17,15 +17,15 @@ class App extends Component {
   render () {
     return (
       < BrowserRouter>
-         <NavLinks/>
-         <main>
-         <Switch>
-         <Route path='/products'   component={AllProducts }  >
-         </Route>
-          <Route component={AddProduct }  path='/add-product' />
-          </Switch>
-          </main>
-      </ BrowserRouter>
+        <NavLinks/>
+        <main>
+        <Switch>
+        <Route  path='/products'   component={AllProducts } ></Route>
+        <Route component={AddProduct }  path='/add-product/:prodId' />
+        <Route component={AddProduct }  path='/add-product' />
+        </Switch>
+        </main>
+      </BrowserRouter>
     );
   }
 }
