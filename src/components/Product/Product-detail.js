@@ -1,31 +1,15 @@
 import React from 'react'
 
-
-
-const productDetails =(props)=>{
-
+const productDetail=(props)=>{
     return(
         <div>
-          <div >{props.description}</div>
-           <div >{props.name}</div>
-           <div >{props.price}</div>
-           
+            <div>{props.name}</div>
+            <div>{props.price}</div>
+            <div>{props.description}</div>
+            <img src={props.image}/>
+           <button>close</button>
         </div>
     )
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-export default productDetails
-
-
+export default productDetail

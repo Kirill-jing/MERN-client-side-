@@ -1,26 +1,21 @@
 import React from 'react'
-import {NavLink} from 'react-router-dom'
+import {NavLink, Switch} from 'react-router-dom'
 
-const Product=(props)=>{
-   
+const Product =(props)=>{
 
+return(
+<div>
+    <div>{props.name}</div>
+    <div>{props.description}</div>
+    <div>{props.price}</div>
+    <img src={props.image}></img>
+    <button onClick={props.delete}>delete</button>
+    <Switch>
+    <button><NavLink to={`/add-product/${props.id}?edit=true`} exact>edit </NavLink></button>
+    <button onClick={props.details}><NavLink to={`/products/${props.id}`} exact>detail</NavLink></button>
+    </Switch>
+</div>)
 
-
-    return(
-        <div  >
-            <div>{props.name}</div>
-            <div>{ props.description.split('').splice(0,5).join('') }</div>
-            <div>{props.price}</div>
-            <img src={props.image} alt="erferfewrf"></img>
-            <button onClick={props.detailsHandler}>
-                <NavLink to={'/products/'+ props.id} exact>egrtg</NavLink>
-            </button>
-          <button onClick={props.delete}>delete</button>
-           <button>
-           <NavLink to={`/add-product/${props.id}?edit=true`} exact>egrtg</NavLink>
-           </button>
-        </div>
-    )
 }
 
-export default Product
+export default Product 
