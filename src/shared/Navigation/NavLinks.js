@@ -14,6 +14,14 @@ const NavLinks =(props)=>{
          <li>
             < NavLink to = '/add-product'  exact > Add Product</NavLink>
          </li>
+         
+         <li>
+            < NavLink to = '/signup'  exact > signup </NavLink>
+         </li>
+         
+         <li>
+            < NavLink to = '/login'  exact > login</NavLink>
+         </li>
      </ul>
 
    )
