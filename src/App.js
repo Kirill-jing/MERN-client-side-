@@ -17,6 +17,30 @@ class App extends Component {
     isAuth:false,
     token: null,
     userId: null,
+    h:null
+  }
+
+  componentWillMount() {
+    const token = localStorage.getItem('token');
+    const expiryDate = localStorage.getItem('expiryDate');
+   
+
+    if (!token || !expiryDate) {
+      return;
+    }
+    // if (new Date(expiryDate) <= new Date()) {
+    //   this.logoutHandler();
+    //   return;
+    // }
+    const userId = localStorage.getItem('userId');
+ 
+    // const remainingMilliseconds =
+    //   new Date(expiryDate).getTime() - new Date().getTime();
+    this.setState({ isAuth: true, token: token, userId: userId ,h:'1'});
+
+    // this.setAutoLogout(remainingMilliseconds);
+
+
   }
 
  signupHandler=(event,authData)=>{
@@ -28,10 +52,8 @@ let Data={
 }
 axios.put('http://localhost:5003/auth/signup',Data).then(res=>{
   console.log(res)
-
 })
  }
-
  loginHandler=(event,logData)=>{
 event.preventDefault()
 let Data={
@@ -74,11 +96,19 @@ axios.post('http://localhost:5003/auth/login',Data)
  }
 
   render () {
+    console.log(this.state.token)
     return (
       <BrowserRouter>
         <NavLinks/>
         <Switch>
-        <Route  path='/products' exact   component={AllProducts } ></Route>
+        <Route  path='/products' exact 
+            render={props=>(
+              <AllProducts
+              {...props}
+              token={this.state.token}
+              />
+              
+             )} ></Route>
         <Route component={AddProduct } exact path='/add-product/:prodId' />
         <Route  path='/add-product'  exact component={AddProduct } ></Route>
         <Route  path='/signup' exact 

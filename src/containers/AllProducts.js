@@ -14,10 +14,18 @@ class AllProducts extends Component {
         product:false
     }
 
+
+
 componentDidMount(){
-    axios.get('http://localhost:5003/user/products')
+    console.log(this.props.token)
+    axios.get('http://localhost:5003/user/products',{headers:{
+        Authorization:'bearer '+this.props.token
+    }})
     .then(result=>{
+      
+      
 this.setState({products:result.data.product})
+
  })
 }
 
