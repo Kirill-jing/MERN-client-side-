@@ -109,8 +109,19 @@ axios.post('http://localhost:5003/auth/login',Data)
               />
               
              )} ></Route>
+                 <Route  path='/add-product'  exact 
+        render={props=>(
+          <AddProduct
+          {...props}
+          userId={this.state.userId}
+          token={this.state.token}
+          />
+          
+         )}
+        
+        ></Route>
         <Route component={AddProduct } exact path='/add-product/:prodId' />
-        <Route  path='/add-product'  exact component={AddProduct } ></Route>
+    
         <Route  path='/signup' exact 
         render={props=>(
          <SignUp

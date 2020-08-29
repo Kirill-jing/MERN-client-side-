@@ -49,6 +49,7 @@ class AddProduct extends Component {
                   data.append('price', this.state.price)
                   data.append("image",this.state.image)
                   data.append('description',this.state.description)
+                  
                   axios.put(`http://localhost:5003/user/products/edit/${id}`, data )
                   .then(response=>{
                       console.log(response)
@@ -59,13 +60,18 @@ class AddProduct extends Component {
               }
 
           postHandler=()=>{
+              console.log(this.props.token)
               const data = new FormData()
               data.append('name',this.state.name )
               data.append('price', this.state.price)
               data.append('image',this.state.image)
               data.append('description',this.state.description)
-              axios.post('http://localhost:5003/user/post-product',data)
+              data.append('userId',this.props.userId)
+              axios.post('http://localhost:5003/user/post-product', data,{headers:{
+                Authorization:'bearer '+this.props.token
+            }})
               .then(response=>{
+
                   console.log(response)
               }).catch(err=>{
                   console.log(err)
