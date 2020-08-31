@@ -10,10 +10,13 @@ return(
     <div>{props.price}</div>
     <img src={props.image}></img>
     <button onClick={props.delete}>delete</button>
-    <Switch>
+ {props.show ?
+ 
     <button><NavLink to={`/add-product/${props.id}?edit=true`} exact>edit </NavLink></button>
-    <button onClick={props.details}><NavLink to={`/products/${props.id}`} exact>detail</NavLink></button>
-    </Switch>
+:null}
+    <button onClick={props.details}><NavLink to={`/Myproducts/${props.id}`} exact>detail</NavLink></button>
+    
+
 </div>)
 
 }

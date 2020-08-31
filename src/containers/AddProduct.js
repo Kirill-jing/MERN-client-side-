@@ -37,12 +37,10 @@ class AddProduct extends Component {
                        })
                    }
                 }
-               
-            
         
             editHandler=()=>{
                 let id = this.props.match.params.prodId
-               
+               console.log(this.props.token)
                 if(this.editMode){
                   const data=new FormData()
                   data.append('name',this.state.name )
@@ -50,7 +48,9 @@ class AddProduct extends Component {
                   data.append("image",this.state.image)
                   data.append('description',this.state.description)
                   
-                  axios.put(`http://localhost:5003/user/products/edit/${id}`, data )
+                  axios.put(`http://localhost:5003/user/products/edit/${id}`, data, {headers:{
+                    Authorization:'bearer '+this.props.token
+                }} )
                   .then(response=>{
                       console.log(response)
                   }).catch(err =>{
@@ -66,7 +66,6 @@ class AddProduct extends Component {
               data.append('price', this.state.price)
               data.append('image',this.state.image)
               data.append('description',this.state.description)
-              data.append('userId',this.props.userId)
               axios.post('http://localhost:5003/user/post-product', data,{headers:{
                 Authorization:'bearer '+this.props.token
             }})

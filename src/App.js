@@ -1,9 +1,10 @@
 
 import React, { Component } from 'react';
 import AddProduct from './containers/AddProduct';
-import AllProducts from './containers/AllProducts'
+import MyProducts from './containers/MyProducts'
 import  SignUp from './containers/Signup'
 import Login from './containers/Login'
+import AllProducts from './containers/AllProducts'
 import {
   BrowserRouter ,
   Route,
@@ -101,9 +102,27 @@ axios.post('http://localhost:5003/auth/login',Data)
       <BrowserRouter>
         <NavLinks/>
         <Switch>
-        <Route  path='/products' exact 
+        <Route  path='/All-products' exact 
+        render={props=>(
+         <AllProducts
+         {...props}
+         token={this.state.token}
+     
+         />
+         
+        )}> 
+        </Route>
+        <Route  path='/Myproducts' exact 
             render={props=>(
-              <AllProducts
+              <MyProducts
+              {...props}
+              token={this.state.token}
+              />
+              
+             )} ></Route>
+                  <Route  path='/Myproducts/:prodId' exact 
+            render={props=>(
+              <MyProducts
               {...props}
               token={this.state.token}
               />
@@ -120,7 +139,17 @@ axios.post('http://localhost:5003/auth/login',Data)
          )}
         
         ></Route>
-        <Route component={AddProduct } exact path='/add-product/:prodId' />
+                  <Route  path='/add-product/:prodId'  exact 
+        render={props=>(
+          <AddProduct
+          {...props}
+          userId={this.state.userId}
+          token={this.state.token}
+          />
+          
+         )}
+        
+        ></Route>
     
         <Route  path='/signup' exact 
         render={props=>(
@@ -139,8 +168,7 @@ axios.post('http://localhost:5003/auth/login',Data)
          onLogin={this.loginHandler}
          />
          
-        )}>
-          
+        )}> 
         </Route>
         </Switch>
       </BrowserRouter>

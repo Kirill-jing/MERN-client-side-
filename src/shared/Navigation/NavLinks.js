@@ -8,7 +8,7 @@ const NavLinks =(props)=>{
    return(
       <ul className = 'nav'>
           <li> 
-            <NavLink to = '/products'  exact> All Products</NavLink>
+            <NavLink to = '/Myproducts'  exact>My Products</NavLink>
           </li>
 
          <li>
@@ -21,6 +21,9 @@ const NavLinks =(props)=>{
          
          <li>
             < NavLink to = '/login'  exact > login</NavLink>
+         </li>
+         <li>
+            < NavLink to = '/All-products'  exact >All products</NavLink>
          </li>
      </ul>
 
