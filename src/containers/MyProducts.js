@@ -2,16 +2,13 @@ import React , {Component} from 'react'
 import axios from 'axios'
 import Product from '../components/Product/Product'
 import ProductDetail from '../components/Product/Product-detail'
-import {
-    BrowserRouter ,
-    Route,
-  } from 'react-router-dom';
 
 class AllProducts extends Component {
 
     state={
         products:[],
-        product:false
+        product:false,
+        showeDetails:false
     }
 
 
@@ -29,17 +26,21 @@ this.setState({products:result.data.product})
  })
 }
 
-componentDidUpdate(){
+componentDidUpdate(){  
     this.detailsHandler=(id)=>{
-        if(id){
-            axios.get(`http://localhost:5003/user/productDetail/${id}`)
-            .then(res=>{
-              this.setState({product:res.data.prod})
-              console.log(res.data)
-            })
-        }
-    }
+ let prod=  this.state.products.filter(el=>{
+     return el._id==id
+    })
+    this.setState({product:prod[0] , showeDetails:true})  
+}}
+
+
+closeDetails(){
+    console.log('fuck')
+   this.setState({showeDetails:false})
 }
+
+
 
 delete=(id)=>{
     axios.delete('http://localhost:5003/user/delete-product/'+id)
@@ -64,6 +65,8 @@ this.setState({products:update})
            description={this.state.product.description}
            name={this.state.product.name}
            price={this.state.product.price}
+           image={'http://localhost:5003/'+this.state.product.image}
+           closeDetails={()=>this.closeDetails()}
        
            />
    }
@@ -86,8 +89,10 @@ this.setState({products:update})
    })
    return(<div>
     <div>{prods}</div>
-    <div>{post}</div>
-    <Route path='/products/:prodId' component={ProductDetail}></Route>
+    {this.state.showeDetails ?
+    <div>{post}</div> :null
+    }
+
     </div>
     
   )

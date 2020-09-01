@@ -20,23 +20,23 @@ class AddProduct extends Component {
             this.setState({image:file})
             }
         
-                componentDidMount(){
-                    let id =this.props.match.params.prodId
-                   if(this.editMode){
-                       axios.get('http://localhost:5003/user/products/'+id)
-                       .then(res=>{
-                           let prepProd={...this.state}
-                           prepProd=res.data.prod
-                         
-                           this.setState({name:prepProd.name,
-                            price:prepProd.price,
-                            description:prepProd.description,
-                            image:prepProd.image})
-                            console.log(this.state)
+     componentDidMount(){
+         let id =this.props.match.params.prodId
+        if(this.editMode){
+            axios.get('http://localhost:5003/user/products/'+id)
+            .then(res=>{
+                let prepProd={...this.state}
+                prepProd=res.data.prod
+              
+                this.setState({name:prepProd.name,
+                 price:prepProd.price,
+                 description:prepProd.description,
+                 image:prepProd.image})
+                 console.log(this.state)
 
-                       })
-                   }
-                }
+            })
+        }
+     }
         
             editHandler=()=>{
                 let id = this.props.match.params.prodId
