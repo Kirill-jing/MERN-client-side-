@@ -2,6 +2,7 @@ import React ,{Component} from 'react'
 import Product from '../components/Product/Product'
 import axios from 'axios'
 import ProductDetail from '../components/Product/Product-detail'
+import Cart from '../components/Product/Cart'
 class AllProducts extends Component {
 
 state={
@@ -14,45 +15,44 @@ state={
 
 
 componentDidMount(){
-    console.log(this.props.token)
     axios.get('http://localhost:5003/user/all-products',{headers:{
         Authorization:'bearer '+this.props.token
     }})
-    .then(result=>{
-      
-      
-this.setState({products:result.data.product})
-
- })
-}
-
-
+    .then(result=>{   
      
+this.setState({products:result.data.product})
+ })
+ axios.get('http://localhost:5003/user/get-cart',{headers:{ 
+
+     Authorization:'bearer '+this.props.token
+ }}).then(res=>{
+   let newCart=[]
+     res.data.user.forEach(el=>{
+        this.state.products.map(elem=>{
+           if(elem._id==el){
+               newCart.push(elem)
+           }
+           }) 
+           
+     })
+     this.setState({cart:newCart})
+  
+ })}
+
     addToCart=(id)=>{
-        console.log(this.props.token)
-    //    let cartProd=this.state.products.filter(el=>{
-    //         return el._id == id
-    //     })[0]
+       let cartProd=this.state.products.filter(el=>{
+            return el._id == id
+        })[0]
        
-        // let copy =[... this.state.cart]
-        //   copy.push(cartProd)
-        // this.setState({cart:copy})
-        // const data = new FormData()
-        // data.append('name',cartProd.name )
-        // data.append('price', cartProd.price)
-        // data.append('image',cartProd.image)
-        // data.append('description',cartProd.description)
+        let copy =[... this.state.cart]
+          copy.push(cartProd)
+        this.setState({cart:copy})
         let data=null
         axios.post(`http://localhost:5003/user/add-cart/${id}`,data,{headers:{
             Authorization:'bearer '+this.props.token
         }}).then(res=>{
             console.log(res)
-        })
-
-    }
-
-
-
+        })}
 
 componentDidUpdate(){  
     this.detailsHandler=(id)=>{
@@ -67,7 +67,7 @@ closeDetails(){
 }
 
 render(){
-
+console.log(this.state.cart)
     let post
     if(this.state.products!=null){
     post=<p></p>
@@ -81,6 +81,19 @@ if(this.state.product){
        closeDetails={()=>this.closeDetails()}
        />
 }
+
+let cart=this.state.cart.map(item=>{
+    return(
+        <Cart
+        key={Math.random()}
+        name={item.name}
+        price={item.price}
+        image={'http://localhost:5003/'+item.image}
+        description={item.description}
+        />
+    )
+})
+
 
     let prods=this.state.products.map(product=>{
         return(
@@ -105,6 +118,8 @@ if(this.state.product){
 {this.state.showeDetails ?
 <div>{post} </div> :null
 }
+{/* {cart} */}
+
 </div>
     )
 }
