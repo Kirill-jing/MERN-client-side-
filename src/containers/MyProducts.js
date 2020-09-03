@@ -50,8 +50,7 @@ delete=(id)=>{
 let update = Object.values(newProd).filter(prod=>
     prod._id!==id
 )
-this.setState({products:update})
-    
+this.setState({products:update})   
 }
 
 
@@ -64,6 +63,7 @@ this.setState({products:update})
      post= <ProductDetail 
            description={this.state.product.description}
            name={this.state.product.name}
+           amount={this.state.product.amount}
            price={this.state.product.price}
            image={'http://localhost:5003/'+this.state.product.image}
            closeDetails={()=>this.closeDetails()}
@@ -77,6 +77,7 @@ this.setState({products:update})
        show={true}
        key={Math.random()}
        name={product.name}
+       amount={product.amount}
        price={product.price}
        description={product.description}
        image={'http://localhost:5003/'+product.image}
