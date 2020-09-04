@@ -90,7 +90,6 @@ class AddProduct extends Component {
 
 
 render(){
-   
     return(
         <div>
         <div>
