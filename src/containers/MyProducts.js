@@ -11,8 +11,6 @@ class AllProducts extends Component {
         showeDetails:false
     }
 
-
-
 componentDidMount(){
     console.log(this.props.token)
     axios.get('http://localhost:5003/user/products',{headers:{
