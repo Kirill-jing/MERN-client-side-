@@ -6,8 +6,9 @@ const NavLinks =(props)=>{
       
     
    return(
+      <div className='back-nav'>
       <ul className = 'nav'>
-{props.auth?
+{props.auth ?
          <Fragment>
           <li> 
             <NavLink to = '/Myproducts'  exact>My Products</NavLink>
@@ -17,6 +18,8 @@ const NavLinks =(props)=>{
             < NavLink to = '/add-product'  exact > Add Product</NavLink>
          </li>
          </Fragment>:null}
+         {!props.auth ?
+             <Fragment> 
          <li>
             < NavLink to = '/signup'  exact > signup </NavLink>
          </li>
@@ -24,6 +27,7 @@ const NavLinks =(props)=>{
          <li>
             < NavLink to = '/login'  exact > login</NavLink>
          </li>
+         </Fragment>  :null} 
          <li onClick={props.logout}>
             < NavLink to = '/logout'  exact > logoun</NavLink>
          </li>
@@ -31,7 +35,7 @@ const NavLinks =(props)=>{
             < NavLink to = '/All-products'  exact >All products</NavLink>
          </li>
      </ul>
-
+     </div>
    )
 
 }

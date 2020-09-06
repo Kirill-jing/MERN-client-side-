@@ -1,0 +1,27 @@
+.opac{
+    position: fixed;
+width: 100%;
+height: 100%;
+top: 0;
+    z-index: 33;
+background-color: rgba(8, 8, 8, 0.5)
+}
+
+.back{
+    background-color: rgb(8, 5, 31);
+    color: white;
+}
+
+.cart{
+    z-index: 15;
+  position: absolute;
+
+  right: 0px; 
+  background-color: gray}
+.cartImage{
+    position: absolute;
+    top:0px;
+    right: 200px;
+    cursor: pointer;
+    
+}

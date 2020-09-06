@@ -1,5 +1,5 @@
 
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import AddProduct from './containers/AddProduct';
 import MyProducts from './containers/MyProducts'
 import  SignUp from './containers/Signup'
@@ -16,8 +16,8 @@ import axios from 'axios';
 class App extends Component { 
   state={
     isAuth:false,
-    token: null,
-    userId: null,
+    token: undefined,
+    userId: undefined,
   }
 
   componentWillMount() {
@@ -146,8 +146,9 @@ axios.post('http://localhost:5003/auth/login',Data)
         )}> 
         </Route>
 
-        {this.state.isAuth ?
-     <div>
+
+{this.state.isAuth ?
+<Fragment>
         <Route  path='/Myproducts' exact 
             render={props=>(
               <MyProducts
@@ -171,8 +172,7 @@ axios.post('http://localhost:5003/auth/login',Data)
           token={this.state.token}
           /> 
          )}></Route>
-         </div>
-         : null}
+
                   <Route  path='/add-product/:prodId'  exact 
         render={props=>(
           <AddProduct
@@ -181,7 +181,7 @@ axios.post('http://localhost:5003/auth/login',Data)
           token={this.state.token}
           />
          )}></Route>
-    
+    </Fragment> : null}
         <Route  path='/signup' exact 
         render={props=>(
          <SignUp

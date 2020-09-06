@@ -16,9 +16,7 @@ componentDidMount(){
     axios.get('http://localhost:5003/user/products',{headers:{
         Authorization:'bearer '+this.props.token
     }})
-    .then(result=>{
-      
-      
+    .then(result=>{   
 this.setState({products:result.data.product})
 
  })
@@ -46,8 +44,7 @@ delete=(id)=>{
        ...this.state.products
    }
 let update = Object.values(newProd).filter(prod=>
-    prod._id!==id
-)
+    prod._id!==id)
 this.setState({products:update})   
 }
 

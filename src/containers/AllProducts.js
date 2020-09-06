@@ -3,15 +3,20 @@ import Product from '../components/Product/Product'
 import axios from 'axios'
 import ProductDetail from '../components/Product/Product-detail'
 import Cart from '../components/Product/Cart'
+import './AllProducts.css'
+
 class AllProducts extends Component {
 state={
     products:[],
     product:{},
     showeDetails:false,
-    cart:[]
+    cart:[],
+    opac:' ',
+    showeCart:false
 }
 
 componentDidMount(){
+
     axios.get('http://localhost:5003/user/all-products',{headers:{
         Authorization:'bearer '+this.props.token
     }})
@@ -19,6 +24,9 @@ componentDidMount(){
      
 this.setState({products:result.data.product})
  })
+ if(!this.props.token){
+     return
+ }
  axios.get('http://localhost:5003/user/get-cart',{headers:{ 
      Authorization:'bearer '+this.props.token
  }}).then(res=>{
@@ -54,11 +62,24 @@ componentDidUpdate(){
  let prod=  this.state.products.filter(el=>{
      return el._id==id
     })
-    this.setState({product:prod[0],showeDetails:true})  
-}}
+    this.setState({product:prod[0],showeDetails:true,opac:'opac'})  
+    
+}
+this.showCart=()=>{
+    let show=!this.state.showeCart
+
+    this.setState({showeCart:show})
+    console.log(this.state.showeCart)
+}
+}
 closeDetails(){
     console.log('fuck')
    this.setState({showeDetails:false})
+}
+showCart(){
+    let show=!this.state.showeCart
+    this.setState({showeCart:show})
+    console.log(this.state.showeCart)
 }
 
 
@@ -79,16 +100,21 @@ addition=(price,id,amount)=>{
     let newArr=[...this.state.products]
     newArr.forEach(el=>{
         if(el._id==id){
+            if(el.yourAmount>=el.amount){
+                return
+            }
             el.yourAmount++
         return  el.priceYourAmount+=el.price
         }
     })
    this.setState({products:newArr})
-
 }
 
+
+
 render(){
-console.log(this.state.cart)
+    console.log(this.state.showeCart)
+
     let post
     if(this.state.products!=null){
     post=<p></p>
@@ -116,11 +142,8 @@ let cart=this.state.cart.map(item=>{
         image={'http://localhost:5003/'+item.image}
         description={item.description}
         deleteHandler={()=>this.deleteHandler(item._id)}
-  
-
         />
-    )
-})
+    )})
 
 
     let prods=this.state.products.map(product=>{
@@ -145,12 +168,21 @@ let cart=this.state.cart.map(item=>{
        })
 
     return(
-<div>
+      
+<div className='back' >
+ 
+    <div className='cart'>
+    <img className ='cartImage' onClick={this.showCart} src="/images/bin.png"/>
+    {this.state.showeCart ?
+        [cart] : null }
+    </div>
+ 
+   
 {prods}
 {this.state.showeDetails ?
-<div>{post} </div> :null
+<div className={this.state.opac}>{post} </div> :null
 }
-{cart}
+
 
 </div>
     )

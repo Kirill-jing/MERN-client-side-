@@ -1,5 +1,5 @@
 import React from 'react'
-
+import './Product-detail.css'
 const productDetail=(props)=>{
     return(
         <div>
