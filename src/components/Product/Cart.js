@@ -1,19 +1,20 @@
 import React from 'react'
-
+import './Cart.css'
 const Cart=(props)=>{
     return(
-        <div>
+        <div className='cart'>
+          
+             <img className='cartImage' src={props.image}/>
             <div>{props.name}</div>
-            <div>{props.price}</div>
+            <div>{'цена за еденицу '+props.price+' $'}</div>
             <div>{props.description}</div>
-            <div>{props.amount}</div>
-            <p>{props.yourAmount}</p>
-            <p>{props.priceYourAmount}</p>
-            <img src={props.image}/>
+            <p>{'Общее колличество '+ props.yourAmount}</p>
+            <p>{'общая стоимость '+props.priceYourAmount+' $'}</p>
+          
             <button onClick={props.deleteHandler}>delete</button>
-            <p></p>
-            <p></p>
+           
         </div>
+       
     )
 }
 

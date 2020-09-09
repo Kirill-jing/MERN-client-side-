@@ -7,21 +7,20 @@ top: 0;
 background-color: rgba(8, 8, 8, 0.5)
 }
 
-.back{
-    background-color: rgb(8, 5, 31);
-    color: white;
+
+.buck{
+    position: absolute;
+    right: 0px;
+    z-index: 100;
+}
+.buck:hover{
+cursor: pointer;
+}
+.li-pad{
+    margin-top: 220px;
 }
 
-.cart{
-    z-index: 15;
-  position: absolute;
-
-  right: 0px; 
-  background-color: gray}
-.cartImage{
-    position: absolute;
-    top:0px;
-    right: 200px;
-    cursor: pointer;
-    
+.products{
+    position:absolute ;
+    top: 0;
 }

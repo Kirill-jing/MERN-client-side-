@@ -19,28 +19,16 @@ class App extends Component {
     token: undefined,
     userId: undefined,
   }
+   
 
   componentWillMount() {
     const token = localStorage.getItem('token');
     const expiryDate = localStorage.getItem('expiryDate');
-   
-
     if (!token || !expiryDate) {
       return;
     }
-    // if (new Date(expiryDate) <= new Date()) {
-    //   this.logoutHandler();
-    //   return;
-    // }
     const userId = localStorage.getItem('userId');
- 
-    // const remainingMilliseconds =
-    //   new Date(expiryDate).getTime() - new Date().getTime();
     this.setState({ isAuth: true, token: token, userId: userId });
-
-    // this.setAutoLogout(remainingMilliseconds);
-
-
   }
 
  signupHandler=(event,authData)=>{
@@ -78,7 +66,6 @@ axios.put('http://localhost:5003/auth/signup',Data).then(res => {
     new Date().getTime() + remainingMilliseconds
   );
   localStorage.setItem('expiryDate', expiryDate.toISOString());
-
 })
  }
  loginHandler=(event,logData)=>{
@@ -89,18 +76,15 @@ let Data={
 }
 
 axios.post('http://localhost:5003/auth/login',Data)
-
 .then(res => {
  
   if (res.status === 422) {
     console.log('Error!');
   }
   if (res.status !== 200 && res.status !== 201) {
-    console.log('Error!');
-    
+    console.log('Error!');  
   }
   return res
-
 }).then(resData=>{
   console.log(resData)
   this.setState({
@@ -117,10 +101,8 @@ axios.post('http://localhost:5003/auth/login',Data)
     new Date().getTime() + remainingMilliseconds
   );
   localStorage.setItem('expiryDate', expiryDate.toISOString());
-
 })
  }
-
  logoutHandler = () => {
   this.setState({ isAuth: false, token: null });
   localStorage.removeItem('token');
@@ -130,7 +112,7 @@ axios.post('http://localhost:5003/auth/login',Data)
 
 
   render () {
-    console.log(this.state.token)
+
     return (
       <BrowserRouter>
         <NavLinks logout={this.logoutHandler} auth={this.state.isAuth}/>
@@ -140,9 +122,7 @@ axios.post('http://localhost:5003/auth/login',Data)
          <AllProducts
          {...props}
          token={this.state.token}
-     
          />
-         
         )}> 
         </Route>
 
@@ -159,7 +139,7 @@ axios.post('http://localhost:5003/auth/login',Data)
              )} ></Route>
                   <Route  path='/Myproducts/:prodId' exact 
             render={props=>(
-              <MyProducts
+              <MyProducts 
               {...props}
               token={this.state.token}
               />

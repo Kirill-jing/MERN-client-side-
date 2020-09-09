@@ -8,7 +8,8 @@ class AllProducts extends Component {
     state={
         products:[],
         product:false,
-        showeDetails:false
+        showeDetails:false,
+        showButtons:false
     }
 
 componentDidMount(){
@@ -69,6 +70,7 @@ this.setState({products:update})
    let prods=this.state.products.map(product=>{
     return(
        <Product
+       showButtons={this.state.showButtons}
        show={true}
        key={Math.random()}
        name={product.name}

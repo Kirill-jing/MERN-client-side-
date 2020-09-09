@@ -4,7 +4,7 @@ import axios from 'axios'
 import ProductDetail from '../components/Product/Product-detail'
 import Cart from '../components/Product/Cart'
 import './AllProducts.css'
-
+import { connect } from 'react-redux'
 class AllProducts extends Component {
 state={
     products:[],
@@ -12,7 +12,8 @@ state={
     showeDetails:false,
     cart:[],
     opac:' ',
-    showeCart:false
+    showeCart:false,
+    showButtons:true
 }
 
 componentDidMount(){
@@ -109,6 +110,18 @@ addition=(price,id,amount)=>{
     })
    this.setState({products:newArr})
 }
+subtraction=(id)=>{
+    let newArr=[...this.state.products]
+    newArr.forEach(el=>{
+        if(el._id==id){
+            if(el.yourAmount<=0){
+                return
+            }
+            el.yourAmount--
+        return  el.priceYourAmount-=el.price
+        }})
+   this.setState({products:newArr})
+}
 
 
 
@@ -131,7 +144,7 @@ if(this.state.product){
 }
 
 let cart=this.state.cart.map(item=>{
-    return(
+    return(<li >
         <Cart
         key={Math.random()}
         name={item.name}
@@ -142,13 +155,14 @@ let cart=this.state.cart.map(item=>{
         image={'http://localhost:5003/'+item.image}
         description={item.description}
         deleteHandler={()=>this.deleteHandler(item._id)}
-        />
+        /></li>
     )})
 
 
     let prods=this.state.products.map(product=>{
         return(
            <Product
+           showButton={this.state.showButtons}
            show={false}
            key={Math.random()}
            name={product.name}
@@ -162,6 +176,7 @@ let cart=this.state.cart.map(item=>{
            details={()=>this.detailsHandler(product._id)}
            addToCart={()=>this.addToCart(product._id)}
            addition={()=>this.addition(product.priceYourAmount,product._id,product.yourAmount)}
+           subtraction={()=>this.subtraction(product._id)}
            />
               )
             
@@ -169,16 +184,17 @@ let cart=this.state.cart.map(item=>{
 
     return(
       
-<div className='back' >
+<div  >
  
-    <div className='cart'>
-    <img className ='cartImage' onClick={this.showCart} src="/images/bin.png"/>
+
+    <img className='buck' onClick={this.showCart} src="/images/bin.png"/>
     {this.state.showeCart ?
         [cart] : null }
-    </div>
- 
-   
-{prods}
+
+<div className='products'>
+{prods} 
+</div>
+
 {this.state.showeDetails ?
 <div className={this.state.opac}>{post} </div> :null
 }
@@ -189,5 +205,6 @@ let cart=this.state.cart.map(item=>{
 }
 
 }
+
 
 export default AllProducts

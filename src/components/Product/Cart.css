@@ -1,0 +1,17 @@
+.cart{
+
+z-index: 15;
+position: relative;
+left: 110px;
+width: 300px;
+background-color: gray}
+.cartImage{
+float: right;
+z-index: 100;
+position: absolute;
+right: 100px;
+cursor: pointer;  
+width: 40px;
+height: 100px;
+
+}
