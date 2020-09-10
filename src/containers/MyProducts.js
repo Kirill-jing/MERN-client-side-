@@ -63,7 +63,9 @@ this.setState({products:update})
            price={this.state.product.price}
            image={'http://localhost:5003/'+this.state.product.image}
            closeDetails={()=>this.closeDetails()}
-       
+           cap={this.state.product.cap}
+           power={this.state.product.power}
+           type={this.state.product.type}
            />
    }
          

@@ -5,6 +5,7 @@ import MyProducts from './containers/MyProducts'
 import  SignUp from './containers/Signup'
 import Login from './containers/Login'
 import AllProducts from './containers/AllProducts'
+import Search from './containers/Search'
 import {
   BrowserRouter ,
   Route,
@@ -119,7 +120,7 @@ axios.post('http://localhost:5003/auth/login',Data)
         <Switch>
         <Route  path='/All-products' exact 
         render={props=>(
-         <AllProducts
+         <AllProducts 
          {...props}
          token={this.state.token}
          />
@@ -137,6 +138,7 @@ axios.post('http://localhost:5003/auth/login',Data)
               />
               
              )} ></Route>
+             <Route path='/search' exact component={Search}></Route>
                   <Route  path='/Myproducts/:prodId' exact 
             render={props=>(
               <MyProducts 

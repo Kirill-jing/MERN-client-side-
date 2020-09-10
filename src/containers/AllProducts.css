@@ -7,11 +7,16 @@ top: 0;
 background-color: rgba(8, 8, 8, 0.5)
 }
 
-
-.buck{
+.all-prods{
+    background:  rgb(24, 24, 43);
     position: absolute;
+}
+.buck{
+
     right: 0px;
-    z-index: 100;
+    top:333px;
+    z-index: 130;
+    color: rgba(8, 8, 8, 0.5);
 }
 .buck:hover{
 cursor: pointer;
@@ -21,6 +26,6 @@ cursor: pointer;
 }
 
 .products{
-    position:absolute ;
-    top: 0;
+position:absolute ; 
+    top: 110px;
 }

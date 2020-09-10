@@ -5,8 +5,6 @@ import axios from 'axios';
 
 class AddProduct extends Component {
    editMode = this.props.location.search==="?edit=true"
-
-
     state = {
         name:undefined,
         price:undefined,
@@ -14,13 +12,15 @@ class AddProduct extends Component {
         description:undefined,
         amount:undefined,
         priceYourAmount:undefined,
+        cap:undefined,
+        type:undefined,
+        power:undefined,
         yourAmount:1
         }
 
           
           fileSelectedHandler=event=>{
             let file=event.target.files[0]
-
             this.setState({image:file})
             }
         
@@ -36,7 +36,13 @@ class AddProduct extends Component {
                  price:prepProd.price,
                  description:prepProd.description,
                  amount:prepProd.amount,
-                 image:prepProd.image})
+                 image:prepProd.image,
+                 cap:prepProd.cap,
+                 power:prepProd.power,
+                 type:prepProd.type,
+                }
+                 
+                 )
                  console.log(this.state)
 
             })
@@ -55,6 +61,9 @@ class AddProduct extends Component {
                   data.append("yourAmount",this.state.yourAmount)
                   data.append("image",this.state.image)
                   data.append('description',this.state.description)
+                  data.append('cap',this.state.cap)
+                  data.append('power',this.state.power)
+                  data.append('type',this.state.type)
                   
                   axios.put(`http://localhost:5003/user/products/edit/${id}`, data, {headers:{
                     Authorization:'bearer '+this.props.token
@@ -77,6 +86,9 @@ class AddProduct extends Component {
               data.append("yourAmount",this.state.yourAmount)
               data.append('image',this.state.image)
               data.append('description',this.state.description)
+              data.append('cap',this.state.cap)
+              data.append('power',this.state.power)
+              data.append('type',this.state.type)
               axios.post('http://localhost:5003/user/post-product', data,{headers:{
                 Authorization:'bearer '+this.props.token
             }})
@@ -110,6 +122,18 @@ render(){
          <div>
             <label>amount</label>
             <input type='number' value={this.state.amount} onChange={(event)=> this.setState({amount:event.target.value})}  />
+        </div>
+        <div>
+            <label>cap</label>
+            <input type='number' value={this.state.cap} onChange={(event)=> this.setState({cap:event.target.value})}  />
+        </div>
+        <div>
+            <label>power</label>
+            <input type='number' value={this.state.power} onChange={(event)=> this.setState({power:event.target.value})}  />
+        </div>
+        <div>
+            <label>type</label>
+            <input type='text' value={this.state.type} onChange={(event)=> this.setState({type:event.target.value})}  />
         </div>
         <div style={{display:'none'}} >
             <label>youramount</label>

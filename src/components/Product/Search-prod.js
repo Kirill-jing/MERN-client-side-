@@ -1,6 +1,6 @@
 import React from 'react'
-import './Product-detail.css'
-const productDetail=(props)=>{
+
+const SearchProd=(props)=>{
     return(
         <div>
             <div>{props.name}</div>
@@ -17,4 +17,4 @@ const productDetail=(props)=>{
     )
 }
 
-export default productDetail
+export default SearchProd

@@ -2,7 +2,7 @@
 
 z-index: 15;
 position: relative;
-left: 110px;
+right: 0px;
 width: 300px;
 background-color: gray}
 .cartImage{
@@ -14,4 +14,7 @@ cursor: pointer;
 width: 40px;
 height: 100px;
 
+}
+li{
+    list-style-type: none;
 }

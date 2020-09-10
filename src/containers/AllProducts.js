@@ -4,12 +4,13 @@ import axios from 'axios'
 import ProductDetail from '../components/Product/Product-detail'
 import Cart from '../components/Product/Cart'
 import './AllProducts.css'
-import { connect } from 'react-redux'
+
 class AllProducts extends Component {
 state={
     products:[],
     product:{},
     showeDetails:false,
+    serarchPrice:null,
     cart:[],
     opac:' ',
     showeCart:false,
@@ -40,7 +41,7 @@ console.log(res)
        let cartProd=this.state.products.filter(el=>{
             return el._id == id
         })[0]
-       console.log(cartProd)
+
         let copy =[... this.state.cart]
           copy.push(cartProd)
         this.setState({cart:copy})
@@ -72,7 +73,20 @@ this.showCart=()=>{
     this.setState({showeCart:show})
     console.log(this.state.showeCart)
 }
-}
+this.changeHandler=(e)=>{
+ 
+    axios.get('http://localhost:5003/user/all-products',{headers:{
+        Authorization:'bearer '+this.props.token
+    }})
+    .then(result=>{   
+ let prods = result.data.product.filter(el=>{
+    console.log(el.price)
+return el.price<=this.state.serarchPrice
+})
+this.setState({products:prods})
+ })
+
+}}
 closeDetails(){
     console.log('fuck')
    this.setState({showeDetails:false})
@@ -82,8 +96,6 @@ showCart(){
     this.setState({showeCart:show})
     console.log(this.state.showeCart)
 }
-
-
 deleteHandler=(id)=>{
     let data=null
  axios.post(`http://localhost:5003/user/delete-cart/${id}`,data,{headers:{
@@ -126,7 +138,7 @@ subtraction=(id)=>{
 
 
 render(){
-    console.log(this.state.showeCart)
+console.log(this.state.products)
 
     let post
     if(this.state.products!=null){
@@ -140,6 +152,9 @@ if(this.state.product){
        price={this.state.product.price}
        image={'http://localhost:5003/'+ this.state.product.image}
        closeDetails={()=>this.closeDetails()}
+       cap={this.state.product.cap}
+       power={this.state.product.power}
+       type={this.state.product.type}
        />
 }
 
@@ -178,28 +193,31 @@ let cart=this.state.cart.map(item=>{
            addition={()=>this.addition(product.priceYourAmount,product._id,product.yourAmount)}
            subtraction={()=>this.subtraction(product._id)}
            />
-              )
-            
+              )   
        })
 
     return(
       
-<div  >
- 
+<div className='all-prods' >
 
+        <input type='range' min='0' max='30' value={this.state.serarchPrice} onChange={event=>{
+        this.setState({serarchPrice:event.target.value})
+    return   this.changeHandler(this.state.serarchPrice)}
+        
+    
+    } ></input>
+    <p>{this.state.serarchPrice}</p>
+   
     <img className='buck' onClick={this.showCart} src="/images/bin.png"/>
     {this.state.showeCart ?
         [cart] : null }
-
-<div className='products'>
+<div className='products '>
 {prods} 
 </div>
 
 {this.state.showeDetails ?
 <div className={this.state.opac}>{post} </div> :null
 }
-
-
 </div>
     )
 }

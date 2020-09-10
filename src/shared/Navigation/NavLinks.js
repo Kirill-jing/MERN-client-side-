@@ -17,6 +17,9 @@ const NavLinks =(props)=>{
          <li>
             < NavLink to = '/add-product'  exact > Add Product</NavLink>
          </li>
+         <li>
+            < NavLink to = '/search'  exact > Search</NavLink>
+         </li>
          </Fragment>:null}
          {!props.auth ?
              <Fragment> 
