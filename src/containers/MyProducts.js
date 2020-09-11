@@ -13,11 +13,12 @@ class AllProducts extends Component {
     }
 
 componentDidMount(){
-    console.log(this.props.token)
+
     axios.get('http://localhost:5003/user/products',{headers:{
         Authorization:'bearer '+this.props.token
     }})
     .then(result=>{   
+        console.log(result)
 this.setState({products:result.data.product})
 
  })
@@ -40,7 +41,11 @@ closeDetails(){
 
 
 delete=(id)=>{
-    axios.delete('http://localhost:5003/user/delete-product/'+id)
+  
+    console.log(this.props.token)
+    axios.delete('http://localhost:5003/user/delete-product/'+id, {headers:{
+        Authorization:'bearer '+this.props.token
+    }} )
    let newProd={
        ...this.state.products
    }

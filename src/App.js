@@ -109,11 +109,15 @@ axios.post('http://localhost:5003/auth/login',Data)
   localStorage.removeItem('token');
   localStorage.removeItem('expiryDate');
   localStorage.removeItem('userId');
+  localStorage.removeItem('exp');
 };
 
 
   render () {
 
+if(Date.parse(localStorage.getItem('expiryDate'))-new Date().getTime()<=0){
+  this.logoutHandler()
+}
     return (
       <BrowserRouter>
         <NavLinks logout={this.logoutHandler} auth={this.state.isAuth}/>

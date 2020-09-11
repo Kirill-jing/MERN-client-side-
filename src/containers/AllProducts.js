@@ -33,7 +33,7 @@ this.setState({products:result.data.product})
      Authorization:'bearer '+this.props.token
  }}).then(res=>{
 console.log(res)
-
+    
      this.setState({cart:res.data.user})
  })}
 
@@ -138,8 +138,10 @@ subtraction=(id)=>{
 
 
 render(){
-console.log(this.state.products)
 
+// if(localStorage.getItem('expiryDate')<=new Date().getTime()){
+//   return this.props.logoutHandler()
+// }
     let post
     if(this.state.products!=null){
     post=<p></p>
