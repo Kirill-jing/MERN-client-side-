@@ -1,8 +1,40 @@
-
+import Button from '@material-ui/core/Button';
 import React , {Component} from 'react'
 import axios from 'axios';
-
-
+import style from 'styled-components'
+import SaveIcon from '@material-ui/icons/Save';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload'
+import { styled } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+const MyInput = style.input`
+display:none;
+`
+const MyGrid=style.div`
+dispaly:flex;
+height:100%;
+flex-direction:column;
+width:400px;
+justify-content:flex-end;
+`
+const CustInput=styled(TextField)({
+  palette: {
+    secondary: {
+      // This is green.A700 as hex.
+      main: '#11cb5f',
+    },
+  },
+  fontColor:'white',
+  borderBottom: '1px solid #e2e2e1',
+  '& label':{
+color:'crimson'
+  },
+  '& label.Mui-focused': {
+    color: 'white',
+  },
+  '& .MuiInput-underline:after': {
+    borderBottomColor: 'white',
+  },
+})
 class AddProduct extends Component {
    editMode = this.props.location.search==="?edit=true"
     state = {
@@ -103,38 +135,80 @@ class AddProduct extends Component {
 
 render(){
     return(
-        <div>
-        <div>
-            <label>name</label>
-            <input type='text' value={ this.state.name } onChange={(event)=> this.setState({name:event.target.value})}  />
-        </div>
-        <div>
-            <label>price</label>
-            <input type='number' value={this.state.price} onChange={(event)=> this.setState({price:event.target.value,priceYourAmount:event.target.value})}  />
-        </div>
-        <div>
-            <label>description</label>
-            <input type='text' value={this.state.description} onChange={(event)=> this.setState({description:event.target.value})}  />
-        </div>
+        <MyGrid>
+<div>
+<CustInput value={ this.state.name }
+color='secondary'
+ onChange={(event)=> this.setState({name:event.target.value})}  
+ id="standard-search" 
+ label="name" 
+ type="search" />
+ </div>
+ <div>
+        <TextField
+        value={this.state.price} onChange={(event)=> this.setState({price:event.target.value,priceYourAmount:event.target.value})}
+          id="standard-number"
+          label="Price"
+          type="number"
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
+</div>
+<div>
+                <TextField
+          id="standard-multiline-static"
+          label="Description"
+          multiline
+          rows={4}
+          columns={17}
+          value={this.state.description} onChange={(event)=> this.setState({description:event.target.value})}
+        />
+</div>
           <div>
-             <input type='file'  name='image'  onChange={this.fileSelectedHandler}></input>
+             <MyInput  id="contained-button-file" type='file'  name='image'  onChange={this.fileSelectedHandler}></MyInput >
+             <label htmlFor="contained-button-file">
+        <Button   startIcon={<CloudUploadIcon />} variant="contained" color="primary" component="span">
+          Upload
+        </Button>
+      </label>
          </div>
          <div>
-            <label>amount</label>
-            <input type='number' value={this.state.amount} onChange={(event)=> this.setState({amount:event.target.value})}  />
-        </div>
-        <div>
-            <label>cap</label>
-            <input type='number' value={this.state.cap} onChange={(event)=> this.setState({cap:event.target.value})}  />
-        </div>
-        <div>
-            <label>power</label>
-            <input type='number' value={this.state.power} onChange={(event)=> this.setState({power:event.target.value})}  />
-        </div>
-        <div>
-            <label>type</label>
-            <input type='text' value={this.state.type} onChange={(event)=> this.setState({type:event.target.value})}  />
-        </div>
+         <TextField
+      value={this.state.amount} onChange={(event)=> this.setState({amount:event.target.value})}
+          id="standard-number"
+          label="Amount"
+          type="number"
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
+            </div>
+            <div>
+                 <TextField
+      value={this.state.cap} onChange={(event)=> this.setState({cap:event.target.value})} 
+          id="standard-number"
+          label="Cap"
+          type="number"
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
+             </div>
+             <div>
+                         <TextField
+   value={this.state.power} onChange={(event)=> this.setState({power:event.target.value})}
+          id="standard-number"
+          label="Powet"
+          type="number"
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
+             </div>
+             <div>
+<TextField value={this.state.type} onChange={(event)=> this.setState({type:event.target.value})}  id="standard-search" label="Type" type="search" />
+</div>
         <div style={{display:'none'}} >
             <label>youramount</label>
             <input type='number' value={this.state.yourAmount}   />
@@ -143,10 +217,21 @@ render(){
             <label>priceamount</label>
             <input type='number' value={this.state.priceYourAmount}  />
         </div>
-        
-
-    <button onClick={this.editMode ? this.editHandler:this.postHandler} ></button>
+        <div>
+        <Button
+         onClick={this.editMode ? this.editHandler:this.postHandler}
+        variant="contained"
+        color="primary"
+        size="small"
+   
+        startIcon={<SaveIcon />}
+      >
+        Save
+      </Button>
       </div>
+
+ 
+      </MyGrid>
     )
 }
 }

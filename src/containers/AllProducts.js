@@ -4,7 +4,28 @@ import axios from 'axios'
 import ProductDetail from '../components/Product/Product-detail'
 import Cart from '../components/Product/Cart'
 import './AllProducts.css'
+import { styled } from '@material-ui/core/styles';
+import style from 'styled-components'
+import Badge from '@material-ui/core/Badge';
+import { withStyles } from '@material-ui/core/styles';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import IconButton from '@material-ui/core/IconButton';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import zIndex from '@material-ui/core/styles/zIndex'
 
+const Korz = style.div`
+position:absolute;
+right:0px;
+`
+const StyledBadge =  styled(Badge)({
+    position:'absolute',
+    right: '20px',
+   top:'-50px',
+   zIndex:'20',
+   cursor:'pointer'
+
+})
 class AllProducts extends Component {
 state={
     products:[],
@@ -13,7 +34,7 @@ state={
     serarchPrice:null,
     cart:[],
     opac:' ',
-    showeCart:false,
+    showeCart:null,
     showButtons:true
 }
 
@@ -67,10 +88,14 @@ componentDidUpdate(){
     this.setState({product:prod[0],showeDetails:true,opac:'opac'})  
     
 }
-this.showCart=()=>{
-    let show=!this.state.showeCart
+this.showCart=(e)=>{
+      
 
-    this.setState({showeCart:show})
+    this.setState({showeCart:e})
+    console.log(this.state.showeCart)
+}
+this.Close=(e)=>{
+    this.setState({showeCart:null})
     console.log(this.state.showeCart)
 }
 this.changeHandler=(e)=>{
@@ -91,11 +116,7 @@ closeDetails(){
     console.log('fuck')
    this.setState({showeDetails:false})
 }
-showCart(){
-    let show=!this.state.showeCart
-    this.setState({showeCart:show})
-    console.log(this.state.showeCart)
-}
+
 deleteHandler=(id)=>{
     let data=null
  axios.post(`http://localhost:5003/user/delete-cart/${id}`,data,{headers:{
@@ -139,9 +160,36 @@ subtraction=(id)=>{
 
 render(){
 
-// if(localStorage.getItem('expiryDate')<=new Date().getTime()){
-//   return this.props.logoutHandler()
-// }
+    const StyledMenuItem = withStyles((theme) => ({
+        root: {
+          '&:focus': {
+            backgroundColor: theme.palette.primary.main,
+            '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
+              color: theme.palette.common.white,
+            },
+          },
+        },
+      }))(MenuItem);
+
+ const   StyledMenu = withStyles({
+
+      })((props) => (
+        <Menu
+          elevation={0}
+          getContentAnchorEl={null}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
+          {...props}
+        />
+      ));
+
+
     let post
     if(this.state.products!=null){
     post=<p></p>
@@ -210,11 +258,29 @@ let cart=this.state.cart.map(item=>{
     } ></input>
     <p>{this.state.serarchPrice}</p>
    
-    <img className='buck' onClick={this.showCart} src="/images/bin.png"/>
-    {this.state.showeCart ?
-        [cart] : null }
+
+    <Korz>
+    <StyledBadge onClick={event=>this.showCart(event.currentTarget)}  aria-label="cart">
+      <Badge  badgeContent={this.state.cart.length} color="secondary">
+        <ShoppingCartIcon />
+      </Badge>
+    </StyledBadge>
+
+          <StyledMenu
+          onClose={this.Close}
+        anchorEl={this.state.showeCart}
+        keepMounted
+        open={this.state.showeCart}
+      
+      >
+    <StyledMenuItem>
+        <div> {cart}</div>
+        </StyledMenuItem>
+      </StyledMenu>
+    </Korz>
 <div className='products '>
 {prods} 
+
 </div>
 
 {this.state.showeDetails ?

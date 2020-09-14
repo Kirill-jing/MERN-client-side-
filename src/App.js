@@ -6,6 +6,7 @@ import  SignUp from './containers/Signup'
 import Login from './containers/Login'
 import AllProducts from './containers/AllProducts'
 import Search from './containers/Search'
+import './containers/AllProducts.css'
 import {
   BrowserRouter ,
   Route,
@@ -19,6 +20,7 @@ class App extends Component {
     isAuth:false,
     token: undefined,
     userId: undefined,
+    data:undefined
   }
    
 
@@ -31,6 +33,7 @@ class App extends Component {
     const userId = localStorage.getItem('userId');
     this.setState({ isAuth: true, token: token, userId: userId });
   }
+
 
  signupHandler=(event,authData)=>{
 event.preventDefault()
@@ -118,7 +121,7 @@ axios.post('http://localhost:5003/auth/login',Data)
 if(Date.parse(localStorage.getItem('expiryDate'))-new Date().getTime()<=0){
   this.logoutHandler()
 }
-    return (
+    return (<div className='main' >
       <BrowserRouter>
         <NavLinks logout={this.logoutHandler} auth={this.state.isAuth}/>
         <Switch>
@@ -189,6 +192,7 @@ if(Date.parse(localStorage.getItem('expiryDate'))-new Date().getTime()<=0){
         </Route>
         </Switch>
       </BrowserRouter>
+      </div>
     );
   }
 }
