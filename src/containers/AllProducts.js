@@ -12,12 +12,16 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import zIndex from '@material-ui/core/styles/zIndex'
+import Slider from '@material-ui/core/Slider';
 
 const Korz = style.div`
 position:absolute;
 right:0px;
 `
+
+const CustomSlider=styled(Slider)({
+  width:'200px'
+})
 const StyledBadge =  styled(Badge)({
     position:'absolute',
     right: '20px',
@@ -31,21 +35,21 @@ state={
     products:[],
     product:{},
     showeDetails:false,
-    serarchPrice:null,
+    serarchPrice:0,
     cart:[],
     opac:' ',
     showeCart:null,
-    showButtons:true
+    showButtons:true,
+    slide:[]
 }
 
 componentDidMount(){
-
     axios.get('http://localhost:5003/user/all-products',{headers:{
         Authorization:'bearer '+this.props.token
     }})
     .then(result=>{   
      
-this.setState({products:result.data.product})
+this.setState({products:result.data.product,slide:result.data.product})
  })
  if(!this.props.token){
      return
@@ -58,13 +62,26 @@ console.log(res)
      this.setState({cart:res.data.user})
  })}
 
+ delete=(id)=>{
+  
+  axios.delete('http://localhost:5003/user/delete-product/'+id, {headers:{
+      Authorization:'bearer '+this.props.token
+  }} )
+ let newProd={
+     ...this.state.products
+ }
+let update = Object.values(newProd).filter(prod=>
+  prod._id!==id)
+this.setState({products:update})   
+}
+
     addToCart=(id)=>{
        let cartProd=this.state.products.filter(el=>{
             return el._id == id
         })[0]
 
         let copy =[... this.state.cart]
-          copy.push(cartProd)
+        copy.push(cartProd)
         this.setState({cart:copy})
         const data=new FormData()
         data.append('name',cartProd.name )
@@ -77,7 +94,7 @@ console.log(res)
         axios.post(`http://localhost:5003/user/add-cart/${id}`,data,{headers:{
             Authorization:'bearer '+this.props.token
         }}).then(res=>{
-            console.log(res)
+  
         })}
 
 componentDidUpdate(){  
@@ -85,35 +102,24 @@ componentDidUpdate(){
  let prod=  this.state.products.filter(el=>{
      return el._id==id
     })
-    this.setState({product:prod[0],showeDetails:true,opac:'opac'})  
-    
+    this.setState({product:prod[0],showeDetails:true,opac:'opac'}) 
 }
 this.showCart=(e)=>{
-      
-
+ 
     this.setState({showeCart:e})
-    console.log(this.state.showeCart)
 }
 this.Close=(e)=>{
     this.setState({showeCart:null})
-    console.log(this.state.showeCart)
 }
 this.changeHandler=(e)=>{
- 
-    axios.get('http://localhost:5003/user/all-products',{headers:{
-        Authorization:'bearer '+this.props.token
-    }})
-    .then(result=>{   
- let prods = result.data.product.filter(el=>{
-    console.log(el.price)
+ let products = this.state.slide.filter(el=>{
 return el.price<=this.state.serarchPrice
-})
-this.setState({products:prods})
  })
-
+ this.setState({
+   products:products
+  })
 }}
 closeDetails(){
-    console.log('fuck')
    this.setState({showeDetails:false})
 }
 
@@ -238,6 +244,7 @@ let cart=this.state.cart.map(item=>{
            description={product.description}
            image={'http://localhost:5003/'+product.image}
            id={product._id}
+           delete={()=>this.delete(product._id)}
            details={()=>this.detailsHandler(product._id)}
            addToCart={()=>this.addToCart(product._id)}
            addition={()=>this.addition(product.priceYourAmount,product._id,product.yourAmount)}
@@ -249,14 +256,18 @@ let cart=this.state.cart.map(item=>{
     return(
       
 <div className='all-prods' >
+<CustomSlider
+defaultValue={20}
+      min={0}
+      max={50}
+      step={1}
+        value={this.state.serarchPrice} 
+        valueLabelDisplay="auto"
+        onChange={(event,value)=>{
+          this.setState({serarchPrice:value})
+      return this.changeHandler(this.state.serarchPrice)}}
+      />
 
-        <input type='range' min='0' max='30' value={this.state.serarchPrice} onChange={event=>{
-        this.setState({serarchPrice:event.target.value})
-    return   this.changeHandler(this.state.serarchPrice)}
-        
-    
-    } ></input>
-    <p>{this.state.serarchPrice}</p>
    
 
     <Korz>
@@ -274,7 +285,7 @@ let cart=this.state.cart.map(item=>{
       
       >
     <StyledMenuItem>
-        <div> {cart}</div>
+        <div> {[cart]}</div>
         </StyledMenuItem>
       </StyledMenu>
     </Korz>

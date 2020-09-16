@@ -1,6 +1,8 @@
 import React,{Component} from 'react'
 import SearchProd from '../components/Product/Search-prod'
 import axios from 'axios'
+import TextField from '@material-ui/core/TextField';
+
 
 class Search extends Component{
    state={
@@ -10,15 +12,12 @@ class Search extends Component{
        prods:[]
    }
 
-
    search=(event)=>{
 event.preventDefault()
 axios.get(`http://localhost:5003/user/search?cap=${this.state.cap}&type=${this.state.type}&power=${this.state.power}`).then(result=>{
    this.setState({prods:result.data.prods})
 })
    }
-
-
 
     render(){
 
@@ -68,6 +67,7 @@ axios.get(`http://localhost:5003/user/search?cap=${this.state.cap}&type=${this.s
             <option value="55">55</option>
             <option value="60">60</option>
             </select>
+
             <select name="type"value={this.state.type} onChange={event=>this.setState({type:event.target.value})} >
             <option value="накаливания">накаливания</option>
             <option value="галогенные">галогенные</option>
