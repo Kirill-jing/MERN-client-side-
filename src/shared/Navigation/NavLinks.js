@@ -24,15 +24,15 @@ const NavLinks =(props)=>{
          {!props.auth ?
              <Fragment> 
          <li>
-            < NavLink to = '/signup'  exact > signup </NavLink>
+            < NavLink to = '/signup'  exact > sign up </NavLink>
          </li>
          
          <li>
-            < NavLink to = '/login'  exact > login</NavLink>
+            < NavLink to = '/login'  exact > log in</NavLink>
          </li>
          </Fragment>  :null} 
          <li onClick={props.logout}>
-            < NavLink to = '/logout'  exact > logoun</NavLink>
+            < NavLink to = '/logout'  exact > log out</NavLink>
          </li>
          <li>
             < NavLink to = '/All-products'  exact >All products</NavLink>

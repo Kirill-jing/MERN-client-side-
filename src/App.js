@@ -15,12 +15,15 @@ import {
 import NavLinks from './shared/Navigation/NavLinks'
 import axios from 'axios';
 
+
+
 class App extends Component { 
   state={
     isAuth:false,
     token: undefined,
     userId: undefined,
-    data:undefined
+    data:undefined,
+    language :'russian'
   }
    
 
@@ -34,7 +37,6 @@ class App extends Component {
     this.setState({ isAuth: true, token: token, userId: userId });
   }
 
-
  signupHandler=(event,authData)=>{
 event.preventDefault()
 let Data={
@@ -44,18 +46,15 @@ let Data={
   phone:authData.phone
 }
 axios.put('http://localhost:5003/auth/signup',Data).then(res => {
- 
   if (res.status === 422) {
     console.log('Error!');
   }
   if (res.status !== 200 && res.status !== 201) {
     console.log('Error!');
-    
   }
   return res
 
 }).then(resData=>{
-  console.log(resData)
   this.setState({
     isAuth: true,
     token: resData.data.token,
@@ -63,8 +62,6 @@ axios.put('http://localhost:5003/auth/signup',Data).then(res => {
   });
   localStorage.setItem('token', resData.data.token);
   localStorage.setItem('userId', resData.data.userId);
-  console.log(this.state.token)
-  console.log(this.state.userId)
   const remainingMilliseconds = 60 * 60 * 1000;
   const expiryDate = new Date(
     new Date().getTime() + remainingMilliseconds
@@ -98,8 +95,6 @@ axios.post('http://localhost:5003/auth/login',Data)
   });
   localStorage.setItem('token', resData.data.token);
   localStorage.setItem('userId', resData.data.id);
-  console.log(this.state.token)
-  console.log(this.state.userId)
   const remainingMilliseconds = 60 * 60 * 1000;
   const expiryDate = new Date(
     new Date().getTime() + remainingMilliseconds
@@ -118,21 +113,27 @@ axios.post('http://localhost:5003/auth/login',Data)
 
   render () {
 
+
 if(Date.parse(localStorage.getItem('expiryDate'))-new Date().getTime()<=0){
   this.logoutHandler()
 }
     return (<div className='main' >
+
       <BrowserRouter>
-        <NavLinks logout={this.logoutHandler} auth={this.state.isAuth}/>
+        <NavLinks langHandler={e=>this.langHandler(e)} logout={this.logoutHandler} auth={this.state.isAuth}/>
         <Switch>
+      
         <Route  path='/All-products' exact 
         render={props=>(
+   
          <AllProducts 
          {...props}
          token={this.state.token}
          />
+  
         )}> 
         </Route>
+
 
 
 {this.state.isAuth ?
@@ -192,6 +193,7 @@ if(Date.parse(localStorage.getItem('expiryDate'))-new Date().getTime()<=0){
         </Route>
         </Switch>
       </BrowserRouter>
+  
       </div>
     );
   }

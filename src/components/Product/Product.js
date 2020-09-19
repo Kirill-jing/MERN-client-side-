@@ -1,6 +1,6 @@
 import React from 'react'
 import {NavLink, Switch} from 'react-router-dom'
-import './Product.css'
+import { styled } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
@@ -8,26 +8,51 @@ import RemoveIcon from '@material-ui/icons/Remove';
 import AddIcon from '@material-ui/icons/Add';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
 import EditIcon from '@material-ui/icons/Edit';
+import style from 'styled-components'
+
+const Gr1 = style.div`
+width:1000px;
+display:flex;
+flex-direction:row;
+color:white;
+`
+
+const SumBtns =styled(Button)({
+  width:'5px',
+  height:'25px', 
+})
+const SumIcon =styled(AddIcon)({
+})
+const RegBtns = style.div`
+display:flex;
+flex-direction:row;
+`
+const Div1=style.div`
+display:flex;
+flex-direction:column;
+`
+const Div2=style.div`
+
+display:flex;
+flex-direction:column;
+`
 const Product =(props)=>{
     let str=props.description
 let arr = str.split('').splice(0,50).join('')
 
 return(
-<div className='product'>
-    <div className='pr' >
+<Gr1 >
+<Div1>
+<img src={props.image}></img>
+<div>{'цена за еденицу - '+props.price + " $"}</div>
+</Div1>
+<Div2>
     <div>{props.name}</div>
     <div>{arr+"..."}</div>
-    <div>{'цена за еденицу - '+props.price + " $"}</div>
+
     <div>{'всего в наличии - '+props.amount}</div>
-    <img src={props.image}></img>
-    <Button
-        variant="contained"
-        color="secondary"
-        startIcon={<DeleteIcon />}
-        onClick={props.delete}
-      >
-        Delete
-      </Button>
+    {!props.show ?
+<div>
       <Button
         variant="contained"
         color="secondary"
@@ -36,8 +61,27 @@ return(
       >
         Add to Cart
       </Button>
+      <Button
+        variant="contained"
+        color="secondary"
+startIcon={<MenuBookIcon/>}
+        onClick={props.details}
+      >
+      Details
+      </Button>
+      </div>
+:null}
     
  {props.show ?
+ <div>
+     <Button
+     variant="contained"
+     color="secondary"
+     startIcon={<DeleteIcon />}
+     onClick={props.delete}
+   >
+     Delete
+   </Button>
      <Button
      variant="contained"
      color="secondary"
@@ -46,43 +90,36 @@ return(
    >
    <NavLink to={`/add-product/${props.id}?edit=true`} exact>edit </NavLink>
    </Button>
-
+   </div>
 :null}
-        <Button
-        variant="contained"
-        color="secondary"
-startIcon={<MenuBookIcon/>}
-        onClick={props.details}
-      >
-      Details
-      </Button>
-{props.showButton ?
-    <div className='buttons'>
-          <Button
-        variant="contained"
-        color="secondary"
 
+      {props.showButton ?
+< RegBtns>
+          <SumBtns
+
+        color="secondary"
         onClick={props.subtraction}
       >
-        <RemoveIcon/>
-      </Button>
-      <p>{props.yourAmount}</p>
-      <Button
-        variant="contained"
-        color="secondary"
+        <RemoveIcon   style={{ fontSize: 30 }}/>
+      </SumBtns>
+      <div>{props.yourAmount}</div>
+      <SumBtns
 
+        color="secondary"
+ 
+        size='small'
         onClick={props.addition}
       >
-        <AddIcon/>
-      </Button>
-        {/* <button onClick={props.subtraction}>-</button>
-        <p>{props.yourAmount}</p>
-        <button onClick={props.addition}>+</button> */}
-        <p>{'Общая стоимость - '+props.priceYourAmount+' $'}</p>
-    </div>
+        <SumIcon 
+       style={{ fontSize: 30 }}
+        />
+      </SumBtns>
+
+</ RegBtns>
 : null}
-</div>
-</div>)
+        <div>{'Общая стоимость - '+props.priceYourAmount+' $'}</div>
+</Div2>
+</Gr1 >)
 
 }
 

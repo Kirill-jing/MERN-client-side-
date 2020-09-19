@@ -19,14 +19,13 @@ justify-content:flex-end;
 const CustInput=styled(TextField)({
   palette: {
     secondary: {
-      // This is green.A700 as hex.
       main: '#11cb5f',
     },
   },
   fontColor:'white',
   borderBottom: '1px solid #e2e2e1',
   '& label':{
-color:'crimson'
+color:'white'
   },
   '& label.Mui-focused': {
     color: 'white',
@@ -145,7 +144,7 @@ color='secondary'
  type="search" />
  </div>
  <div>
-        <TextField
+        <CustInput
         value={this.state.price} onChange={(event)=> this.setState({price:event.target.value,priceYourAmount:event.target.value})}
           id="standard-number"
           label="Price"
@@ -156,7 +155,7 @@ color='secondary'
         />
 </div>
 <div>
-                <TextField
+                <CustInput
           id="standard-multiline-static"
           label="Description"
           multiline
@@ -174,7 +173,7 @@ color='secondary'
       </label>
          </div>
          <div>
-         <TextField
+         <CustInput
       value={this.state.amount} onChange={(event)=> this.setState({amount:event.target.value})}
           id="standard-number"
           label="Amount"
@@ -185,7 +184,7 @@ color='secondary'
         />
             </div>
             <div>
-                 <TextField
+                 <CustInput
       value={this.state.cap} onChange={(event)=> this.setState({cap:event.target.value})} 
           id="standard-number"
           label="Cap"
@@ -196,7 +195,7 @@ color='secondary'
         />
              </div>
              <div>
-                         <TextField
+                         <CustInput
    value={this.state.power} onChange={(event)=> this.setState({power:event.target.value})}
           id="standard-number"
           label="Powet"
@@ -207,7 +206,7 @@ color='secondary'
         />
              </div>
              <div>
-<TextField value={this.state.type} onChange={(event)=> this.setState({type:event.target.value})}  id="standard-search" label="Type" type="search" />
+<CustInput value={this.state.type} onChange={(event)=> this.setState({type:event.target.value})}  id="standard-search" label="Type" type="search" />
 </div>
         <div style={{display:'none'}} >
             <label>youramount</label>

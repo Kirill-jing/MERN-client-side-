@@ -1,5 +1,7 @@
 import React from 'react'
 import './Cart.css'
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import Button from '@material-ui/core/Button';
 const Cart=(props)=>{
     return(
         <div className='cart'>
@@ -11,8 +13,7 @@ const Cart=(props)=>{
             <p>{'Общее колличество '+ props.yourAmount}</p>
             <p>{'общая стоимость '+props.priceYourAmount+' $'}</p>
           
-            <button onClick={props.deleteHandler}>delete</button>
-           
+      <HighlightOffIcon onClick={props.deleteHandler}/>
         </div>
        
     )

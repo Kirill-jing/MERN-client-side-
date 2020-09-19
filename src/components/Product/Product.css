@@ -1,8 +1,0 @@
-.buttons{
-    display:flex;
-    flex-direction: row;
-    width:250px;
-    height: 40px;
-    justify-content: space-between;
-    align-items: center;
-}

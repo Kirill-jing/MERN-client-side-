@@ -12,10 +12,6 @@ background-color: rgba(8, 8, 8, 0.5)
     margin-top: 220px;
 }
 
-.products{
-position:absolute ; 
-    top: 110px;
-}
 
 
 
@@ -24,6 +20,6 @@ position:absolute ;
 
 .main{
    
-    background-color: rgb(24, 24, 70);
+    background-color: rgb(53, 65, 138);
     height:100%;
 }

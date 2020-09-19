@@ -18,7 +18,10 @@ const Korz = style.div`
 position:absolute;
 right:0px;
 `
-
+const MyProds=style.div`
+display:flex;
+width:100%;
+`
 const CustomSlider=styled(Slider)({
   width:'200px'
 })
@@ -61,19 +64,6 @@ console.log(res)
     
      this.setState({cart:res.data.user})
  })}
-
- delete=(id)=>{
-  
-  axios.delete('http://localhost:5003/user/delete-product/'+id, {headers:{
-      Authorization:'bearer '+this.props.token
-  }} )
- let newProd={
-     ...this.state.products
- }
-let update = Object.values(newProd).filter(prod=>
-  prod._id!==id)
-this.setState({products:update})   
-}
 
     addToCart=(id)=>{
        let cartProd=this.state.products.filter(el=>{
@@ -165,6 +155,7 @@ subtraction=(id)=>{
 
 
 render(){
+  console.log(this.context)
 
     const StyledMenuItem = withStyles((theme) => ({
         root: {
@@ -215,7 +206,7 @@ if(this.state.product){
 }
 
 let cart=this.state.cart.map(item=>{
-    return(<li >
+    return(
         <Cart
         key={Math.random()}
         name={item.name}
@@ -226,7 +217,7 @@ let cart=this.state.cart.map(item=>{
         image={'http://localhost:5003/'+item.image}
         description={item.description}
         deleteHandler={()=>this.deleteHandler(item._id)}
-        /></li>
+        />
     )})
 
 
@@ -244,7 +235,6 @@ let cart=this.state.cart.map(item=>{
            description={product.description}
            image={'http://localhost:5003/'+product.image}
            id={product._id}
-           delete={()=>this.delete(product._id)}
            details={()=>this.detailsHandler(product._id)}
            addToCart={()=>this.addToCart(product._id)}
            addition={()=>this.addition(product.priceYourAmount,product._id,product.yourAmount)}
@@ -255,7 +245,7 @@ let cart=this.state.cart.map(item=>{
 
     return(
       
-<div className='all-prods' >
+<div  >
 <CustomSlider
 defaultValue={20}
       min={0}
@@ -289,10 +279,10 @@ defaultValue={20}
         </StyledMenuItem>
       </StyledMenu>
     </Korz>
-<div className='products '>
+<MyProds >
 {prods} 
 
-</div>
+</MyProds>
 
 {this.state.showeDetails ?
 <div className={this.state.opac}>{post} </div> :null
@@ -302,6 +292,5 @@ defaultValue={20}
 }
 
 }
-
 
 export default AllProducts
