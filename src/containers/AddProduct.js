@@ -6,6 +6,26 @@ import SaveIcon from '@material-ui/icons/Save';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload'
 import { styled } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import NativeSelect from '@material-ui/core/NativeSelect';
+import InputLabel from '@material-ui/core/InputLabel';
+
+
+const CustomLabel=styled(InputLabel)({
+    color:'white',
+    '&.Mui-focused':{
+        color:'white'
+    }
+
+})
+const CustomSelect=styled(NativeSelect)({
+  color:'white',
+  '&.MuiNativeSelect-nativeInput':{
+      color:'black',  
+  }
+})
 const MyInput = style.input`
 display:none;
 `
@@ -42,7 +62,7 @@ class AddProduct extends Component {
         image:undefined,
         description:undefined,
         amount:undefined,
-        priceYourAmount:undefined,
+        priceYourAmount:0,
         cap:undefined,
         type:undefined,
         power:undefined,
@@ -62,7 +82,6 @@ class AddProduct extends Component {
             .then(res=>{
                 let prepProd={...this.state}
                 prepProd=res.data.prod
-              
                 this.setState({name:prepProd.name,
                  price:prepProd.price,
                  description:prepProd.description,
@@ -95,7 +114,6 @@ class AddProduct extends Component {
                   data.append('cap',this.state.cap)
                   data.append('power',this.state.power)
                   data.append('type',this.state.type)
-                  
                   axios.put(`http://localhost:5003/user/products/edit/${id}`, data, {headers:{
                     Authorization:'bearer '+this.props.token
                 }} )
@@ -124,7 +142,6 @@ class AddProduct extends Component {
                 Authorization:'bearer '+this.props.token
             }})
               .then(response=>{
-
                   console.log(response)
               }).catch(err=>{
                   console.log(err)
@@ -206,7 +223,7 @@ color='secondary'
         />
              </div>
              <div>
-<CustInput value={this.state.type} onChange={(event)=> this.setState({type:event.target.value})}  id="standard-search" label="Type" type="search" />
+{/* <CustInput value={this.state.type} onChange={(event)=> this.setState({type:event.target.value})}  id="standard-search" label="Type" type="search" /> */}
 </div>
         <div style={{display:'none'}} >
             <label>youramount</label>
@@ -216,13 +233,32 @@ color='secondary'
             <label>priceamount</label>
             <input type='number' value={this.state.priceYourAmount}  />
         </div>
+        <FormControl  >
+        <CustomLabel htmlFor="type">Type</CustomLabel>
+        <NativeSelect
+          value={this.state.type}
+          onChange={event=>this.setState({type:event.target.value})} 
+          inputProps={{
+            name:"type" ,
+            id: 'type',
+          }}
+        >
+          <option aria-label="None" value="" />
+          <option value="tungsten lamp">tungsten lamp</option>
+            <option value="halogenous lamp">halogenous lamp</option>
+            <option value="energy-efficient lamp" >energy-efficient lamp</option>
+            <option value="luminiscent lamp" >luminiscent lamp</option>
+            <option value="luminodiode lamp" >luminodiode lamp</option>
+            <option value="IR" >IR</option>
+        </NativeSelect>
+        <FormHelperText>Choose type you need </FormHelperText>
+      </FormControl>
         <div>
         <Button
          onClick={this.editMode ? this.editHandler:this.postHandler}
         variant="contained"
         color="primary"
         size="small"
-   
         startIcon={<SaveIcon />}
       >
         Save

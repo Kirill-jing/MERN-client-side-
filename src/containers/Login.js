@@ -3,11 +3,9 @@ import React ,{Component} from 'react'
 class Login extends Component{
     state={
         password:'',
-        email:null
+        email:null,
+        
     }
-
-
-
 
 
     render(){

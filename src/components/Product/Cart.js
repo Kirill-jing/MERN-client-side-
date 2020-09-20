@@ -1,11 +1,10 @@
 import React from 'react'
 import './Cart.css'
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-import Button from '@material-ui/core/Button';
+
 const Cart=(props)=>{
     return(
         <div className='cart'>
-          
              <img className='cartImage' src={props.image}/>
             <div>{props.name}</div>
             <div>{'цена за еденицу '+props.price+' $'}</div>

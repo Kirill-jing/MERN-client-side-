@@ -11,10 +11,11 @@ import EditIcon from '@material-ui/icons/Edit';
 import style from 'styled-components'
 
 const Gr1 = style.div`
-width:1000px;
+margin-top:50px;
 display:flex;
 flex-direction:row;
 color:white;
+
 `
 
 const SumBtns =styled(Button)({
@@ -44,13 +45,13 @@ return(
 <Gr1 >
 <Div1>
 <img src={props.image}></img>
-<div>{'цена за еденицу - '+props.price + " $"}</div>
+<div>{'Price for one unit- '+props.price + " $"}</div>
 </Div1>
 <Div2>
     <div>{props.name}</div>
     <div>{arr+"..."}</div>
 
-    <div>{'всего в наличии - '+props.amount}</div>
+    <div>{'In stock - '+props.amount}</div>
     {!props.show ?
 <div>
       <Button
@@ -69,6 +70,7 @@ startIcon={<MenuBookIcon/>}
       >
       Details
       </Button>
+      <div>{'Full price - '+props.priceYourAmount+' $'}</div>
       </div>
 :null}
     
@@ -90,13 +92,13 @@ startIcon={<MenuBookIcon/>}
    >
    <NavLink to={`/add-product/${props.id}?edit=true`} exact>edit </NavLink>
    </Button>
+   
    </div>
 :null}
 
       {props.showButton ?
 < RegBtns>
           <SumBtns
-
         color="secondary"
         onClick={props.subtraction}
       >
@@ -114,10 +116,11 @@ startIcon={<MenuBookIcon/>}
        style={{ fontSize: 30 }}
         />
       </SumBtns>
-
+  
 </ RegBtns>
 : null}
-        <div>{'Общая стоимость - '+props.priceYourAmount+' $'}</div>
+
+  
 </Div2>
 </Gr1 >)
 

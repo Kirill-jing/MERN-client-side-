@@ -1,4 +1,3 @@
-
 import React, { Component, Fragment } from 'react';
 import AddProduct from './containers/AddProduct';
 import MyProducts from './containers/MyProducts'
@@ -15,8 +14,6 @@ import {
 import NavLinks from './shared/Navigation/NavLinks'
 import axios from 'axios';
 
-
-
 class App extends Component { 
   state={
     isAuth:false,
@@ -26,24 +23,23 @@ class App extends Component {
     language :'russian'
   }
    
-
-  componentWillMount() {
-    const token = localStorage.getItem('token');
-    const expiryDate = localStorage.getItem('expiryDate');
-    if (!token || !expiryDate) {
-      return;
-    }
-    const userId = localStorage.getItem('userId');
-    this.setState({ isAuth: true, token: token, userId: userId });
+componentWillMount() {
+  const token = localStorage.getItem('token');
+  const expiryDate = localStorage.getItem('expiryDate');
+  if (!token || !expiryDate) {
+    return;
   }
+  const userId = localStorage.getItem('userId');
+  this.setState({ isAuth: true, token: token, userId: userId });
+}
 
- signupHandler=(event,authData)=>{
-event.preventDefault()
-let Data={
-  name:authData.name,
-  email:authData.email,
-  password:authData.password,
-  phone:authData.phone
+signupHandler=(event,authData)=>{
+  event.preventDefault()
+  let Data={
+    name:authData.name,
+    email:authData.email,
+    password:authData.password,
+    phone:authData.phone
 }
 axios.put('http://localhost:5003/auth/signup',Data).then(res => {
   if (res.status === 422) {
@@ -53,13 +49,12 @@ axios.put('http://localhost:5003/auth/signup',Data).then(res => {
     console.log('Error!');
   }
   return res
-
 }).then(resData=>{
   this.setState({
     isAuth: true,
     token: resData.data.token,
     userId: resData.data.userId
-  });
+});
   localStorage.setItem('token', resData.data.token);
   localStorage.setItem('userId', resData.data.userId);
   const remainingMilliseconds = 60 * 60 * 1000;
@@ -67,9 +62,8 @@ axios.put('http://localhost:5003/auth/signup',Data).then(res => {
     new Date().getTime() + remainingMilliseconds
   );
   localStorage.setItem('expiryDate', expiryDate.toISOString());
-})
- }
- loginHandler=(event,logData)=>{
+})}
+loginHandler=(event,logData)=>{
 event.preventDefault()
 let Data={
   email:logData.email,
@@ -78,7 +72,6 @@ let Data={
 
 axios.post('http://localhost:5003/auth/login',Data)
 .then(res => {
- 
   if (res.status === 422) {
     console.log('Error!');
   }
@@ -87,7 +80,6 @@ axios.post('http://localhost:5003/auth/login',Data)
   }
   return res
 }).then(resData=>{
-  console.log(resData)
   this.setState({
     isAuth: true,
     token: resData.data.token,
@@ -110,94 +102,78 @@ axios.post('http://localhost:5003/auth/login',Data)
   localStorage.removeItem('exp');
 };
 
-
   render () {
-
-
 if(Date.parse(localStorage.getItem('expiryDate'))-new Date().getTime()<=0){
   this.logoutHandler()
 }
-    return (<div className='main' >
-
-      <BrowserRouter>
-        <NavLinks langHandler={e=>this.langHandler(e)} logout={this.logoutHandler} auth={this.state.isAuth}/>
-        <Switch>
-      
-        <Route  path='/All-products' exact 
-        render={props=>(
-   
-         <AllProducts 
-         {...props}
-         token={this.state.token}
-         />
-  
-        )}> 
-        </Route>
-
-
-
+return (<div className='main' >
+  <BrowserRouter>
+    <NavLinks langHandler={e=>this.langHandler(e)} logout={this.logoutHandler} auth={this.state.isAuth}/>
+    <Switch>
+    <Route  path='/All-products' exact 
+    render={props=>(
+    <AllProducts 
+    {...props}
+    token={this.state.token}/>)}> 
+    </Route>
 {this.state.isAuth ?
 <Fragment>
-        <Route  path='/Myproducts' exact 
-            render={props=>(
-              <MyProducts
-              {...props}
-              token={this.state.token}
-              />
-              
-             )} ></Route>
-             <Route path='/search' exact component={Search}></Route>
-                  <Route  path='/Myproducts/:prodId' exact 
-            render={props=>(
-              <MyProducts 
-              {...props}
-              token={this.state.token}
-              />
-             )} ></Route>
-                 <Route  path='/add-product'  exact 
-        render={props=>(
-          <AddProduct
-          {...props}
-          userId={this.state.userId}
-          token={this.state.token}
-          /> 
-         )}></Route>
-
-                  <Route  path='/add-product/:prodId'  exact 
-        render={props=>(
-          <AddProduct
-          {...props}
-          userId={this.state.userId}
-          token={this.state.token}
-          />
-         )}></Route>
-    </Fragment> : null}
-        <Route  path='/signup' exact 
-        render={props=>(
-         <SignUp
-         {...props}
-         onSignup={this.signupHandler}
-         />
-         
-        )}>
-
-        </Route>
+  <Route  path='/Myproducts' exact 
+    render={props=>(
+  <MyProducts
+    {...props}
+    token={this.state.token}/> 
+    )} >
+  </Route>
+  <Route path='/search' 
+  exact 
+  component={Search}>
+  </Route>
+  <Route  path='/Myproducts/:prodId' exact 
+  render={props=>(
+  <MyProducts 
+  {...props}
+  token={this.state.token}/>
+  )} >
+  </Route> 
+  <Route  path='/add-product'  exact 
+  render={props=>(
+  <AddProduct
+    {...props}
+    userId={this.state.userId}
+    token={this.state.token}/> 
+     )}>
+  </Route>
+  <Route  path='/add-product/:prodId'  exact 
+  render={props=>(
+    <AddProduct
+    {...props}
+    userId={this.state.userId}
+    token={this.state.token}/>
+   )}>
+   </Route>
+   </Fragment> : null}
+    <Route  path='/signup' exact 
+      render={props=>(
+       <SignUp
+       {...props}
+       onSignup={this.signupHandler}
+       />
+      )}>
+    </Route>
         <Route  path='/login' exact 
         render={props=>(
          <Login
          {...props}
          onLogin={this.loginHandler}
          />
-         
         )}> 
         </Route>
         </Switch>
-      </BrowserRouter>
-  
-      </div>
-    );
-  }
-}
+  </BrowserRouter>
+    </div>
+    )
+  }}
 
 export default App;
 

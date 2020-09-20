@@ -5,44 +5,35 @@ import ProductDetail from '../components/Product/Product-detail'
 
 class AllProducts extends Component {
 
-    state={
-        products:[],
-        product:false,
-        showeDetails:false,
-        showButtons:false
-    }
+state={
+    products:[],
+    product:false,
+    showeDetails:false,
+    showButtons:false
+}
 
 componentDidMount(){
-
     axios.get('http://localhost:5003/user/products',{headers:{
         Authorization:'bearer '+this.props.token
     }})
     .then(result=>{   
-        console.log(result)
-this.setState({products:result.data.product})
-
- })
+    this.setState({products:result.data.product})
+})
 }
 
 componentDidUpdate(){  
     this.detailsHandler=(id)=>{
- let prod=  this.state.products.filter(el=>{
+    let prod=  this.state.products.filter(el=>{
      return el._id==id
     })
     this.setState({product:prod[0] , showeDetails:true})  
 }}
 
-
 closeDetails(){
-    console.log('fuck')
    this.setState({showeDetails:false})
 }
 
-
-
 delete=(id)=>{
-  
-    console.log(this.props.token)
     axios.delete('http://localhost:5003/user/delete-product/'+id, {headers:{
         Authorization:'bearer '+this.props.token
     }} )
@@ -55,23 +46,22 @@ this.setState({products:update})
 }
 
 
-    render(){
-        let post
-        if(this.state.products!=null){
-        post=<p></p>
-        }
-   if(this.state.product){
-     post= <ProductDetail 
-           description={this.state.product.description}
-           name={this.state.product.name}
-           amount={this.state.product.amount}
-           price={this.state.product.price}
-           image={'http://localhost:5003/'+this.state.product.image}
-           closeDetails={()=>this.closeDetails()}
-           cap={this.state.product.cap}
-           power={this.state.product.power}
-           type={this.state.product.type}
-           />
+render(){
+    let post
+    if(this.state.products!=null){
+    post=<p></p>
+    }
+    if(this.state.product){
+    post= <ProductDetail 
+        description={this.state.product.description}
+        name={this.state.product.name}
+        amount={this.state.product.amount}
+        price={this.state.product.price}
+        image={'http://localhost:5003/'+this.state.product.image}
+        closeDetails={()=>this.closeDetails()}
+        cap={this.state.product.cap}
+        power={this.state.product.power}
+        type={this.state.product.type}/>
    }
          
    let prods=this.state.products.map(product=>{
@@ -89,21 +79,16 @@ this.setState({products:update})
        id={product._id}
        details={()=>this.detailsHandler(product._id)}
        />
-          )
-        
+        )   
    })
    return(<div>
     <div>{prods}</div>
     {this.state.showeDetails ?
     <div>{post}</div> :null
     }
-
     </div>
-    
-  )
-    }
-
-}
+    )
+    }}
 
 export default AllProducts
 
