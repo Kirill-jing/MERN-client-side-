@@ -95,7 +95,6 @@ render(){
       value={this.state.email}
       onChange={event=>{this.setState({email:event.target.value})
       return  this.inputEmailHandler(event.target.value.trim())}}/>
-      
       </FormControl>
       <FormControl >
       <CustomLabel  alt={this.state.colp} htmlFor="standard-adornment-password">Password</CustomLabel>

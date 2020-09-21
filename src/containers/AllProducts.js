@@ -12,15 +12,26 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import Slider from '@material-ui/core/Slider';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
 
 const Korz = style.div`
   position:absolute;
   right:0px;
 `
+const AllProds=style.div`
+background-color: rgb(53, 65, 138);
+position:absolute;
+width:100%;
+`
+
 const MyProds=style.div`
+justify-content:center;
   display:flex;
-  flex-direction:column;
-  width:600px;
+  flex-direction:row;
+  flex-wrap:wrap;
+  margin:0 auto;
+  width:700px
 `
 const CustomSlider=styled(Slider)({
   width:'200px'
@@ -42,7 +53,8 @@ state={
   opac:' ',
   showeCart:null,
   showButtons:true,
-  slide:[]
+  slide:[],
+
 }
 
 componentDidMount(){
@@ -231,7 +243,10 @@ let cart=this.state.cart.map(item=>{
        })
 
 return(
-<div  >
+<AllProds>
+
+  <FormControl>
+    <FormHelperText></FormHelperText>
   <CustomSlider
   min={0}
   max={50}
@@ -242,6 +257,9 @@ return(
   onChange={(event,value)=>{
   this.setState({serarchPrice:value})
   return this.changeHandler(this.state.serarchPrice)}} />
+     <FormHelperText style={{color:'white'}}> CHOOSE PRICE RANGE </FormHelperText>
+
+  </FormControl>
   <Korz>
     <StyledBadge onClick={event=>this.showCart(event.currentTarget)}  aria-label="cart">
       <Badge  badgeContent={this.state.cart.length} color="secondary">
@@ -264,7 +282,7 @@ return(
 {this.state.showeDetails ?
 <div className={this.state.opac}>{post} </div> :null
 }
-</div>
+</AllProds>
     )
 }
 }

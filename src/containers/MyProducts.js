@@ -2,7 +2,21 @@ import React , {Component} from 'react'
 import axios from 'axios'
 import Product from '../components/Product/Product'
 import ProductDetail from '../components/Product/Product-detail'
+import style from 'styled-components'
 
+const AllProds=style.div`
+background-color:  rgb(53, 65, 138);
+position:absolute;
+width:100%;
+`
+
+const MyProds=style.div`
+justify-content:center;
+  display:flex;
+  flex-direction:row;
+  flex-wrap:wrap;
+  width:100%
+`
 class AllProducts extends Component {
 
 state={
@@ -28,6 +42,7 @@ componentDidUpdate(){
     })
     this.setState({product:prod[0] , showeDetails:true})  
 }}
+
 
 closeDetails(){
    this.setState({showeDetails:false})
@@ -81,12 +96,12 @@ render(){
        />
         )   
    })
-   return(<div>
-    <div>{prods}</div>
+   return(<AllProds>
+    <MyProds>{prods}</MyProds>
     {this.state.showeDetails ?
     <div>{post}</div> :null
     }
-    </div>
+    </AllProds>
     )
     }}
 

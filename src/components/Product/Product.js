@@ -11,11 +11,10 @@ import EditIcon from '@material-ui/icons/Edit';
 import style from 'styled-components'
 
 const Gr1 = style.div`
-margin-top:50px;
+margin:50px;
 display:flex;
 flex-direction:row;
 color:white;
-
 `
 
 const SumBtns =styled(Button)({
@@ -33,7 +32,6 @@ display:flex;
 flex-direction:column;
 `
 const Div2=style.div`
-
 display:flex;
 flex-direction:column;
 `
@@ -43,6 +41,7 @@ let arr = str.split('').splice(0,50).join('')
 
 return(
 <Gr1 >
+  <audio src='../audio/s.mp3'></audio>
 <Div1>
 <img src={props.image}></img>
 <div>{'Price for one unit- '+props.price + " $"}</div>

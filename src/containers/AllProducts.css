@@ -19,7 +19,8 @@ background-color: rgba(8, 8, 8, 0.5)
 
 
 .main{
-   
+   width: 100%;
+   position: absolute;
     background-color: rgb(53, 65, 138);
     height:100%;
 }
