@@ -6,10 +6,12 @@ import Login from './containers/Login'
 import AllProducts from './containers/AllProducts'
 import Search from './containers/Search'
 import './containers/AllProducts.css'
+
 import {
   BrowserRouter ,
   Route,
-  Switch
+  Switch,
+  withRouter
 } from 'react-router-dom';
 import NavLinks from './shared/Navigation/NavLinks'
 import axios from 'axios';
@@ -20,9 +22,11 @@ class App extends Component {
     token: undefined,
     userId: undefined,
     data:undefined,
-    language :'russian'
   }
    
+
+
+  
 componentWillMount() {
   const token = localStorage.getItem('token');
   const expiryDate = localStorage.getItem('expiryDate');
@@ -63,13 +67,13 @@ axios.put('http://localhost:5003/auth/signup',Data).then(res => {
   );
   localStorage.setItem('expiryDate', expiryDate.toISOString());
 })}
+
 loginHandler=(event,logData)=>{
 event.preventDefault()
 let Data={
   email:logData.email,
   password:logData.password
 }
-
 axios.post('http://localhost:5003/auth/login',Data)
 .then(res => {
   if (res.status === 422) {
@@ -92,6 +96,9 @@ axios.post('http://localhost:5003/auth/login',Data)
     new Date().getTime() + remainingMilliseconds
   );
   localStorage.setItem('expiryDate', expiryDate.toISOString());
+  
+  
+  
 })
  }
  logoutHandler = () => {
@@ -166,6 +173,7 @@ return (<div className='main' >
          <Login
          {...props}
          onLogin={this.loginHandler}
+        
          />
         )}> 
         </Route>
@@ -175,7 +183,7 @@ return (<div className='main' >
     )
   }}
 
-export default App;
+export default withRouter(App);
 
 
 

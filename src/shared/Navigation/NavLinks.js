@@ -8,7 +8,7 @@ return(
    {props.auth ?
     <Fragment>
      <li> 
-       <NavLink to = '/Myproducts'  exact>My Products</NavLink>
+       <NavLink to = '/Myproducts'  exact>Your Products</NavLink>
      </li>
 
     <li>
@@ -18,7 +18,7 @@ return(
        < NavLink to = '/search'  exact > Search</NavLink>
     </li>
     <li>
-       < NavLink to = '/All-products'  exact >All products</NavLink>
+       < NavLink to = '/All-products'  exact >Users products</NavLink>
     </li>
     </Fragment>:null}
     {!props.auth ?

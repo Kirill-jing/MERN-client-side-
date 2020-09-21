@@ -57,6 +57,8 @@ state={
 
 }
 
+
+
 componentDidMount(){
   axios.get('http://localhost:5003/user/all-products',{headers:{
       Authorization:'bearer '+this.props.token
@@ -156,8 +158,6 @@ subtraction=(id)=>{
    this.setState({products:newArr})
 }
 
-
-
 render(){
     const StyledMenuItem = withStyles((theme) => ({
         root: {
@@ -244,7 +244,6 @@ let cart=this.state.cart.map(item=>{
 
 return(
 <AllProds>
-
   <FormControl>
     <FormHelperText></FormHelperText>
   <CustomSlider
@@ -258,7 +257,6 @@ return(
   this.setState({serarchPrice:value})
   return this.changeHandler(this.state.serarchPrice)}} />
      <FormHelperText style={{color:'white'}}> CHOOSE PRICE RANGE </FormHelperText>
-
   </FormControl>
   <Korz>
     <StyledBadge onClick={event=>this.showCart(event.currentTarget)}  aria-label="cart">

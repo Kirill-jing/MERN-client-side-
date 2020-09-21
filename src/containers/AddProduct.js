@@ -10,8 +10,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import NativeSelect from '@material-ui/core/NativeSelect';
 import InputLabel from '@material-ui/core/InputLabel';
-
-
+import { withRouter } from "react-router-dom";
 const CustomLabel=styled(InputLabel)({
   color:'white',
   '&.Mui-focused':{
@@ -67,6 +66,10 @@ class AddProduct extends Component {
     yourAmount:1
         }
 
+
+        handleClick = () => {
+          this.props.history.push("/Myproducts");
+        }
           
   fileSelectedHandler=event=>{
     let file=event.target.files[0]
@@ -131,7 +134,7 @@ class AddProduct extends Component {
       Authorization:'bearer '+this.props.token
       }})
         .then(response=>{
-          console.log(response)
+      return  this.handleClick()
         }).catch(err=>{
             console.log(err)
         })
@@ -208,7 +211,7 @@ render(){
     <CustInput
     value={this.state.power} onChange={(event)=> this.setState({power:event.target.value})}
     id="standard-number"
-    label="Powet"
+    label="Power"
     type="number"
     InputLabelProps={{
       shrink: true,
@@ -243,7 +246,8 @@ render(){
   </FormControl>
   <div>
     <Button
-    onClick={this.editMode ? this.editHandler:this.postHandler}
+    onClick={this.editMode ? this.editHandler:this.postHandler  
+            }
     variant="contained"
     color="primary"
     size="small"
@@ -255,4 +259,4 @@ render(){
     </MyGrid>
     )
 }}
-export default AddProduct
+export default withRouter(AddProduct)

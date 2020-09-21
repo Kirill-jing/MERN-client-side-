@@ -9,6 +9,7 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import { styled } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import FormHelperText from '@material-ui/core/FormHelperText';
+import { withRouter } from "react-router-dom";
 const CustomLabel=styled(InputLabel)({
   color:props=>props.alt ? 'white':'red' ,
   '&.Mui-focused':{
@@ -32,7 +33,8 @@ class Signup extends Component{
     showPassword:false,
     enable:true,
       }
-
+    
+    
  handleClickShowPassword = () => {
      let show = this.state.showPassword
       this.setState({showPassword: !show });
@@ -140,4 +142,4 @@ render(){
        </div>
     )
 }}
-export default Signup
+export default withRouter(Signup)
