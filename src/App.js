@@ -3,29 +3,30 @@ import AddProduct from './containers/AddProduct';
 import MyProducts from './containers/MyProducts'
 import  SignUp from './containers/Signup'
 import Login from './containers/Login'
-import AllProducts from './containers/AllProducts'
+import lazyComponent from './hoc/lazy'
+// import AllProducts from './containers/AllProducts'
+
 import Search from './containers/Search'
 import './containers/AllProducts.css'
-
 import {
   BrowserRouter ,
   Route,
   Switch,
-  withRouter
+ Redirect
 } from 'react-router-dom';
 import NavLinks from './shared/Navigation/NavLinks'
 import axios from 'axios';
-
+const LazyAllProds=lazyComponent(()=>{
+  return import('./containers/AllProducts')
+})
 class App extends Component { 
   state={
     isAuth:false,
     token: undefined,
     userId: undefined,
     data:undefined,
+    redirect:false
   }
-   
-
-
   
 componentWillMount() {
   const token = localStorage.getItem('token');
@@ -57,7 +58,8 @@ axios.put('http://localhost:5003/auth/signup',Data).then(res => {
   this.setState({
     isAuth: true,
     token: resData.data.token,
-    userId: resData.data.userId
+    userId: resData.data.userId,
+    redirect:true
 });
   localStorage.setItem('token', resData.data.token);
   localStorage.setItem('userId', resData.data.userId);
@@ -87,7 +89,8 @@ axios.post('http://localhost:5003/auth/login',Data)
   this.setState({
     isAuth: true,
     token: resData.data.token,
-    userId: resData.data.id
+    userId: resData.data.id,
+    redirect:true
   });
   localStorage.setItem('token', resData.data.token);
   localStorage.setItem('userId', resData.data.id);
@@ -96,9 +99,6 @@ axios.post('http://localhost:5003/auth/login',Data)
     new Date().getTime() + remainingMilliseconds
   );
   localStorage.setItem('expiryDate', expiryDate.toISOString());
-  
-  
-  
 })
  }
  logoutHandler = () => {
@@ -107,19 +107,25 @@ axios.post('http://localhost:5003/auth/login',Data)
   localStorage.removeItem('expiryDate');
   localStorage.removeItem('userId');
   localStorage.removeItem('exp');
+  this.setState({redirect:false})
 };
 
   render () {
-if(Date.parse(localStorage.getItem('expiryDate'))-new Date().getTime()<=0){
-  this.logoutHandler()
-}
+  let red=null
+  if(this.state.redirect===true){
+      red=<Redirect  to='All-products'></Redirect>
+  }
+  if(Date.parse(localStorage.getItem('expiryDate'))-new Date().getTime()<=0){
+    this.logoutHandler()
+  }
 return (<div className='main' >
   <BrowserRouter>
+  {red}
     <NavLinks langHandler={e=>this.langHandler(e)} logout={this.logoutHandler} auth={this.state.isAuth}/>
     <Switch>
     <Route  path='/All-products' exact 
     render={props=>(
-    <AllProducts 
+    <LazyAllProds
     {...props}
     token={this.state.token}/>)}> 
     </Route>
@@ -172,9 +178,7 @@ return (<div className='main' >
         render={props=>(
          <Login
          {...props}
-         onLogin={this.loginHandler}
-        
-         />
+         onLogin={this.loginHandler}/>
         )}> 
         </Route>
         </Switch>
@@ -183,7 +187,7 @@ return (<div className='main' >
     )
   }}
 
-export default withRouter(App);
+export default App;
 
 
 

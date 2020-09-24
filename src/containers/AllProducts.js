@@ -54,7 +54,6 @@ state={
   showeCart:null,
   showButtons:true,
   slide:[],
-
 }
 
 

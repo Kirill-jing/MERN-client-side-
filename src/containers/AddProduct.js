@@ -36,10 +36,10 @@ justify-content:flex-end;
 const CustInput=styled(TextField)({
 palette: {
 secondary: {
-main: '#11cb5f',
+main: 'white',
   },
 },
-fontColor:'white',
+color:'white',
 borderBottom: '1px solid #e2e2e1',
 '& label':{
   color:'white'

@@ -10,6 +10,18 @@ import { styled } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
+const CustomLabel=styled(InputLabel)({
+  color:'white' ,
+  '&.Mui-focused':{
+      color: 'white' ,
+  }
+})
+const CustomInput=styled(Input)({
+  color:'white',
+})
+
+
+
 class Login extends Component{
     state={
         password:'',
@@ -32,18 +44,18 @@ handleMouseDownPassword = (event) => {
             <div>
                 <form onSubmit={e=>this.props.onLogin(e,this.state)}>
       <FormControl>
-      <InputLabel 
-      htmlFor="standard-adornment-password">Email</InputLabel>
-      <Input
+      <CustomLabel 
+      htmlFor="standard-adornment-password">Email</CustomLabel>
+      <CustomInput
       label="Email"
       value={this.state.email}
       onChange={event=>this.setState({email:event.target.value})}/>
       </FormControl>
     <FormControl >
-      <InputLabel  
+      <CustomLabel 
       htmlFor="standard-adornment-password">Password
-      </InputLabel>
-      <Input
+      </CustomLabel>
+      <CustomInput
       id="standard-adornment-password"
       type={this.state.showPassword ? 'text' : 'password'}
       value={this.state.password} 

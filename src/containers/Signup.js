@@ -34,7 +34,7 @@ class Signup extends Component{
     enable:true,
       }
     
-    
+
  handleClickShowPassword = () => {
      let show = this.state.showPassword
       this.setState({showPassword: !show });
@@ -79,7 +79,7 @@ render(){
   <div>
     <form  onSubmit={e=>this.props.onSignup(e,this.state)}>
       <FormControl>
-      <CustomLabel  alt={this.state.coln} htmlFor="standard-adornment-password">Name</CustomLabel>
+      <CustomLabel  alt={this.state.coln} >Name</CustomLabel>
       <CustomInput
       alt={this.state.coln}
       label="Name"
@@ -90,7 +90,7 @@ render(){
       <FormHelperText>minimum 5 letters</FormHelperText>
       </FormControl>
       <FormControl>
-      <CustomLabel  alt={this.state.cole} htmlFor="standard-adornment-password">Email</CustomLabel>
+      <CustomLabel  alt={this.state.cole}>Email</CustomLabel>
       <CustomInput
       alt={this.state.cole}
       label="Email"
@@ -99,7 +99,7 @@ render(){
       return  this.inputEmailHandler(event.target.value.trim())}}/>
       </FormControl>
       <FormControl >
-      <CustomLabel  alt={this.state.colp} htmlFor="standard-adornment-password">Password</CustomLabel>
+      <CustomLabel  alt={this.state.colp} >Password</CustomLabel>
       <CustomInput
       alt={this.state.colp}
       id="standard-adornment-password"
