@@ -1,21 +1,20 @@
-import React , {Component} from 'react'
+import React, { Component } from "react";
 
-const lazyComponent =(importComponent)=>{
-    return class extends Component{
-        state={
-            component:null
-        }
-        componentDidMount(){
-            importComponent()
-            .then(cmp=>{
-                this.setState({component:cmp.default})
-            })
-        }
-
-        render(){
-                const C =this.state.component
-                return C ?<C {...this.props}/>:null
-        }
+const lazyComponent = (importComponent) => {
+  return class extends Component {
+    state = {
+      component: null,
+    };
+    componentDidMount() {
+      importComponent().then((cmp) => {
+        this.setState({ component: cmp.default });
+      });
     }
-}
-export default lazyComponent
+
+    render() {
+      const C = this.state.component;
+      return C ? <C {...this.props} /> : null;
+    }
+  };
+};
+export default lazyComponent;
