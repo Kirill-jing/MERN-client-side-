@@ -106,7 +106,6 @@ class Signup extends Component {
             <CustomLabel alt={this.state.colp}>Password</CustomLabel>
             <CustomInput
               alt={this.state.colp}
-              id="standard-adornment-password"
               type={this.state.showPassword ? "text" : "password"}
               value={this.state.password}
               onChange={(event) => {
@@ -117,7 +116,6 @@ class Signup extends Component {
                 <InputAdornment position="end">
                   <IconButton
                     style={{ color: "whitesmoke" }}
-                    aria-label="toggle password visibility"
                     onClick={this.handleClickShowPassword}
                     onMouseDown={this.handleMouseDownPassword}
                   >
@@ -134,12 +132,7 @@ class Signup extends Component {
           </FormControl>
 
           <FormControl>
-            <CustomLabel
-              alt={this.state.colPh}
-              htmlFor="standard-adornment-password"
-            >
-              Phone number
-            </CustomLabel>
+            <CustomLabel alt={this.state.colPh}>Phone number</CustomLabel>
             <CustomInput
               alt={this.state.colPh}
               value={this.state.phone}
